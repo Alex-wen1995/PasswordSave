@@ -97,6 +97,12 @@ public class AdActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        timerCancel();
+    }
+
     /**
      * 开始倒计时
      */
