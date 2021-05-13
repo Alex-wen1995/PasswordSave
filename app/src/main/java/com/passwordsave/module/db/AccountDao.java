@@ -38,9 +38,11 @@ public interface AccountDao {
     @Query("SELECT * FROM Account")
     Flowable<List<Account>> loadAllAccount();
 
-    @Query("SELECT * FROM Account WHERE title == :title")
-    Account[] loadAccountByTitle(String title);
+    @Query("SELECT * FROM Account WHERE title LIKE +:search OR account LIKE :search")
+    Flowable<List<Account>> loadAccountByKeyword(String search);
 
-    @Query("SELECT * FROM Account WHERE remark == :remark")
-    Account[] loadAccountByRemark(String remark);
+    @Query("SELECT * FROM Account WHERE isCollect == :isCollect and (title LIKE +:search OR account LIKE :search)")
+    Flowable<List<Account>> loadAccountByCollect(boolean isCollect,String search);
+
+
 }

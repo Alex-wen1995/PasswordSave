@@ -41,8 +41,6 @@ import pub.devrel.easypermissions.EasyPermissions
         return inflater.inflate(getLayoutId(),null)
     }
 
-
-
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         if (isVisibleToUser) {

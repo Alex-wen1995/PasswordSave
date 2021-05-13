@@ -18,5 +18,17 @@ public class Account {
     @Ignore
     public boolean isShow = false;
 
-
+    @Ignore
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                ", remark='" + remark + '\'' +
+                ", isCollect=" + isCollect +
+                ", isShow=" + isShow +
+                '}';
+    }
 }
