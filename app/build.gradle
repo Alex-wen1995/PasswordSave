@@ -79,7 +79,7 @@ dependencies {
     //下拉刷新、上拉加载
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-28'
 
-    implementation 'pub.devrel:easypermissions:1.2.0'
+    implementation 'pub.devrel:easypermissions:3.0.0'
 
     // 网络请求库
     implementation rootProject.ext.networkLibs

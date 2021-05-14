@@ -74,7 +74,6 @@ class MainActivity : BaseActivity() {
     }
 
     override fun start() {
-        checkPermission()
         setSelect(0)
     }
 
@@ -119,17 +118,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    /**
-     * 6.0以下版本(系统自动申请) 不会弹框
-     * 有些厂商修改了6.0系统申请机制，他们修改成系统自动申请权限了
-     */
-    private fun checkPermission() {
-        val perms = arrayOf(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
-        EasyPermissions.requestPermissions(this, getString(R.string.need_permission), 0, *perms)
-    }
+
+
 }
