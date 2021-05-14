@@ -126,7 +126,9 @@ class MainActivity : BaseActivity() {
     private fun checkPermission() {
         val perms = arrayOf(
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
         )
         EasyPermissions.requestPermissions(this, getString(R.string.need_permission), 0, *perms)
     }
