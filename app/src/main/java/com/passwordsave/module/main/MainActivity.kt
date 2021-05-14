@@ -1,6 +1,7 @@
 package com.passwordsave.module.main
 
 import android.Manifest
+import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -11,6 +12,8 @@ import com.passwordsave.base.BaseActivity
 import com.passwordsave.module.account.AccountFragment
 import com.passwordsave.module.collect.CollectFragment
 import com.passwordsave.module.setting.SettingFragment
+import com.passwordsave.module.setting.pattern_lock.WholePatternCheckingActivity
+import com.tencent.mmkv.MMKV
 import kotlinx.android.synthetic.main.activity_main.*
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -53,6 +56,7 @@ class MainActivity : BaseActivity() {
                     .setActiveColor(R.color.colorPrimary)
             )
             .initialise()
+
     }
 
     override fun initListener() {

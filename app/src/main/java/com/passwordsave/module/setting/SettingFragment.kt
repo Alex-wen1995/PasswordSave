@@ -6,6 +6,8 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.passwordsave.R
 import com.passwordsave.base.BaseFragment
 import com.passwordsave.module.main.Term2Activity
+import com.passwordsave.module.setting.about.AboutActivity
+import com.passwordsave.module.setting.pattern_lock.PatternSettingActivity
 import com.passwordsave.utils.startActivityNoParam
 import kotlinx.android.synthetic.main.fragment_setting.*
 import kotlinx.android.synthetic.main.item_menu.view.*
@@ -42,8 +44,8 @@ class SettingFragment : BaseFragment() {
 
             itemView.setOnClickListener {
                 when (item.type) {
-//                    1 -> mContext.startActivityNoParam(EditProfileActivity::class.java)
-//                    2 -> mContext.startActivityNoParam(SettingActivity::class.java)
+                    1 -> mContext.startActivityNoParam(PatternSettingActivity::class.java)
+                    2 -> mContext.startActivityNoParam(AboutActivity::class.java)
                     3 -> mContext.startActivityNoParam(Term2Activity::class.java)
 
                 }

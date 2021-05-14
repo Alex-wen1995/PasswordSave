@@ -1,6 +1,7 @@
 package com.passwordsave.module.main
 
 import android.annotation.SuppressLint
+import android.view.View
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_term.*
@@ -13,6 +14,8 @@ class Term1Activity : BaseActivity(){
 
     override fun initData() {
         top_title.text = "用户协议"
+        iv_back.visibility = View.VISIBLE
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -56,6 +59,7 @@ class Term1Activity : BaseActivity(){
     }
 
     override fun initListener() {
+        iv_back.setOnClickListener { finish() }
     }
 
     override fun start() {

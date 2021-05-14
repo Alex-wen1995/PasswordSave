@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.bumptech.glide.Glide;
 import com.passwordsave.R;
+import com.passwordsave.module.setting.pattern_lock.WholePatternCheckingActivity;
 import com.tencent.mmkv.MMKV;
 
 /**
@@ -82,7 +83,11 @@ public class AdActivity extends Activity {
              */
             @Override
             public void onFinish() {
-                startActivity(new Intent(AdActivity.this, MainActivity.class));
+                if (MMKV.defaultMMKV().decodeBool("hasLock", false)) {
+                    startActivity(new Intent(AdActivity.this, WholePatternCheckingActivity.class));
+                }else {
+                    startActivity(new Intent(AdActivity.this, MainActivity.class));
+                }
                 finish();
             }
         };
