@@ -77,7 +77,9 @@ fun Context.dataFormat(total: Long): String {
     }
     return result
 }
-
+fun Context.startActivityNoParam(clazz: Class<*>) {
+    this.startActivity(Intent(this, clazz))
+}
 
 fun Context.base64ToBitmap(code:String): Bitmap {
     val bytes= Base64.decode(code.toByteArray(),Base64.DEFAULT)

@@ -73,4 +73,7 @@ dependencies {
     // room 配合 RxJava
     implementation "android.arch.persistence.room:rxjava2:1.1.1"
     kapt  'android.arch.persistence.room:compiler:1.1.1' //kotlin要使用kapt引用
+
+    //手势密码
+    implementation 'com.github.ihsg:PatternLocker:2.5.7'
 }

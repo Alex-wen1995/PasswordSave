@@ -1,8 +1,6 @@
 package com.passwordsave.module.main
 
 import android.Manifest
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -12,12 +10,14 @@ import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
 import com.passwordsave.module.account.AccountFragment
 import com.passwordsave.module.collect.CollectFragment
+import com.passwordsave.module.setting.SettingFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import pub.devrel.easypermissions.EasyPermissions
 
 class MainActivity : BaseActivity() {
     private var mTab1: Fragment? = null
     private var mTab2: Fragment? = null
+    private var mTab3: Fragment? = null
 
     override fun layoutId(): Int {
         return R.layout.activity_main
@@ -43,6 +43,13 @@ class MainActivity : BaseActivity() {
                     R.drawable.ic_collect_1,
                     ""
                 ).setInactiveIconResource(R.drawable.ic_collect)
+                    .setActiveColor(R.color.colorPrimary)
+            )
+            .addItem(
+                BottomNavigationItem(
+                    R.drawable.ic_set_1,
+                    ""
+                ).setInactiveIconResource(R.drawable.ic_set_2)
                     .setActiveColor(R.color.colorPrimary)
             )
             .initialise()
@@ -84,7 +91,12 @@ class MainActivity : BaseActivity() {
             } else {
                 transaction.show(mTab2!!)
             }
-
+            2 -> if (mTab3 == null) {
+                mTab3 = SettingFragment()
+                transaction.add(R.id.view_stub_main, mTab3 as SettingFragment)
+            } else {
+                transaction.show(mTab3!!)
+            }
             else -> {
             }
         }
@@ -97,6 +109,9 @@ class MainActivity : BaseActivity() {
         }
         if (mTab2 != null) {
             transaction.hide(mTab2!!)
+        }
+        if (mTab3 != null) {
+            transaction.hide(mTab3!!)
         }
     }
 
