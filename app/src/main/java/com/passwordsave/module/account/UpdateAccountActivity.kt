@@ -29,7 +29,11 @@ class UpdateAccountActivity : BaseActivity() {
         et_pwd.setText(intent.getStringExtra("password"))
         et_remark.setText(intent.getStringExtra("remark"))
         is_collect=intent.getBooleanExtra("isCollect",false)
-
+        if (is_collect) {
+            iv_collect.setImageResource(R.drawable.ic_collect_2)
+        } else {
+            iv_collect.setImageResource(R.drawable.ic_collect)
+        }
     }
 
     override fun initListener() {
