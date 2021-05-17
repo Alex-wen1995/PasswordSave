@@ -5,12 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.room.Database
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.bun.miitmdid.core.JLibrary
-import com.passwordsave.module.db.Account
-import com.passwordsave.module.db.AccountDao
 import com.passwordsave.module.db.AppDatabase
 import com.passwordsave.utils.PreviewImageLoader
 import com.previewlibrary.ZoomMediaLoader
@@ -62,7 +57,6 @@ class MyApplication : Application(){
             .allowMainThreadQueries()
             .build()
 
-        JLibrary.InitEntry(this)
     }
 
     private val mActivityLifecycleCallbacks = object : ActivityLifecycleCallbacks {

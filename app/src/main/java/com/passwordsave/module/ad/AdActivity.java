@@ -1,4 +1,4 @@
-package com.passwordsave.module.main;
+package com.passwordsave.module.ad;
 
 import android.Manifest;
 import android.app.Activity;
@@ -16,6 +16,9 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.bumptech.glide.Glide;
 import com.passwordsave.R;
+import com.passwordsave.module.main.MainActivity;
+import com.passwordsave.module.main.Term1Activity;
+import com.passwordsave.module.main.Term2Activity;
 import com.passwordsave.module.setting.pattern_lock.WholePatternCheckingActivity;
 import com.tencent.mmkv.MMKV;
 
