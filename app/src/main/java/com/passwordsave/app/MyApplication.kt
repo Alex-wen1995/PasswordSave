@@ -12,7 +12,7 @@ import com.previewlibrary.ZoomMediaLoader
 import com.socks.library.KLog
 import com.squareup.leakcanary.RefWatcher
 import com.tencent.mmkv.MMKV
-import com.teso.utils.DisplayManager
+import com.passwordsave.utils.DisplayManager
 import kotlin.properties.Delegates
 
 

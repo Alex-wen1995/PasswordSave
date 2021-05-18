@@ -1,4 +1,4 @@
-package com.github.ihsg.demo.ui.whole
+package com.passwordsave.module.setting.pattern_lock
 
 import android.content.Context
 import android.content.Intent
@@ -11,7 +11,6 @@ import com.github.ihsg.patternlocker.DefaultLockerNormalCellView
 import com.github.ihsg.patternlocker.OnPatternChangeListener
 import com.github.ihsg.patternlocker.PatternLockerView
 import com.passwordsave.R
-import com.passwordsave.module.setting.pattern_lock.PatternHelper
 import com.tencent.mmkv.MMKV
 import kotlinx.android.synthetic.main.activity_whole_pattern_setting.*
 import kotlinx.android.synthetic.main.layout_top.*

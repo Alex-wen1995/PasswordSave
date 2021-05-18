@@ -2,11 +2,8 @@ package com.passwordsave.module.setting.pattern_lock
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.github.ihsg.demo.ui.whole.RippleLockerHitCellView
 import com.github.ihsg.patternlocker.DefaultLockerNormalCellView
 import com.github.ihsg.patternlocker.OnPatternChangeListener
 import com.github.ihsg.patternlocker.PatternLockerView

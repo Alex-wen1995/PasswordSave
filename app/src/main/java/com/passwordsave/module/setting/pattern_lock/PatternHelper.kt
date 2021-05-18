@@ -6,7 +6,7 @@ import com.passwordsave.module.setting.pattern_lock.SecurityUtil.encrypt
 import com.passwordsave.module.setting.pattern_lock.SharedPreferencesUtil.Companion.instance
 
 /**
- * Created by hsg on 14/10/2017.
+ * Created by quan on 14/10/2017.
  */
 open class PatternHelper {
     var message: String? = null

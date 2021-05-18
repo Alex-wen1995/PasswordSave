@@ -16,7 +16,7 @@ import java.util.*
 
 
 /**
- * Created by xuhao on 2017/11/14.
+ * Created by quan on 2017/11/14.
  */
 
 fun Fragment.showToast(content: String): Toast {

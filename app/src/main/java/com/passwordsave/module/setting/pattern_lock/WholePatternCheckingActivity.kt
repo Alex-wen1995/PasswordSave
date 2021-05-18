@@ -1,11 +1,9 @@
 package com.passwordsave.module.setting.pattern_lock
 
-import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.github.ihsg.demo.ui.whole.RippleLockerHitCellView
 import com.github.ihsg.patternlocker.DefaultLockerNormalCellView
 import com.github.ihsg.patternlocker.OnPatternChangeListener
 import com.github.ihsg.patternlocker.PatternLockerView
@@ -14,7 +12,6 @@ import com.passwordsave.base.BaseActivity
 import com.passwordsave.module.main.MainActivity
 import kotlinx.android.synthetic.main.activity_whole_pattern_checking.*
 import kotlinx.android.synthetic.main.layout_top.*
-import javax.security.auth.login.LoginException
 
 class WholePatternCheckingActivity : BaseActivity() {
 

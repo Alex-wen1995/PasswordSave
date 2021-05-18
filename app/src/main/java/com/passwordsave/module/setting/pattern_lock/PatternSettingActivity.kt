@@ -1,7 +1,6 @@
 package com.passwordsave.module.setting.pattern_lock
 
 import android.view.View
-import com.github.ihsg.demo.ui.whole.WholePatternSettingActivity
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
 import com.tencent.mmkv.MMKV

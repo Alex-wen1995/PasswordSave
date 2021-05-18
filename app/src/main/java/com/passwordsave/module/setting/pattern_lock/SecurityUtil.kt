@@ -7,7 +7,7 @@ import javax.crypto.spec.SecretKeySpec
 
 /**
  * AES encrypt/decrypt utility
- * Created by hsg on 14/10/2017.
+ * Created by quan on 14/10/2017.
  */
 object SecurityUtil {
     private const val CIPHER_MODE = "AES/ECB/PKCS5Padding"

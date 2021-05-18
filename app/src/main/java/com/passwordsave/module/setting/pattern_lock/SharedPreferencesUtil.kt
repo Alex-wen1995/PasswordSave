@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import com.passwordsave.app.MyApplication
 
 /**
- * Created by hsg on 14/10/2017.
+ * Created by quan on 14/10/2017.
  */
 internal class SharedPreferencesUtil private constructor() {
     private val prefer: SharedPreferences = MyApplication.context

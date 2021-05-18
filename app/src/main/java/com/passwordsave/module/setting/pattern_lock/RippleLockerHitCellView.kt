@@ -1,4 +1,4 @@
-package com.github.ihsg.demo.ui.whole
+package com.passwordsave.module.setting.pattern_lock
 
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -8,7 +8,7 @@ import com.github.ihsg.patternlocker.CellBean
 import com.github.ihsg.patternlocker.IHitCellView
 
 /**
- * Created by hsg on 24/02/2018.
+ * Created by quan on 24/02/2018.
  */
 
 class RippleLockerHitCellView : IHitCellView {

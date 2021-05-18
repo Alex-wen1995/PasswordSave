@@ -1,10 +1,10 @@
-package com.teso.utils
+package com.passwordsave.utils
 
 import android.content.Context
 import android.util.DisplayMetrics
 
 /**
- * Created by xuhao on 2017/11/27.
+ * Created by quan on 2017/11/27.
  * desc:
  */
 
