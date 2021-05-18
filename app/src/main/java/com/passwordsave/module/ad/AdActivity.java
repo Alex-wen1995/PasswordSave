@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.bumptech.glide.Glide;
 import com.passwordsave.R;
+import com.passwordsave.module.login.LoginActivity;
 import com.passwordsave.module.main.MainActivity;
 import com.passwordsave.module.main.Term1Activity;
 import com.passwordsave.module.main.Term2Activity;
@@ -24,6 +25,7 @@ import com.tencent.mmkv.MMKV;
 
 import java.util.List;
 
+import cn.bmob.v3.BmobUser;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
@@ -119,7 +121,11 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
                 if (MMKV.defaultMMKV().decodeBool("hasLock", false)) {
                     startActivity(new Intent(AdActivity.this, WholePatternCheckingActivity.class));
                 } else {
-                    startActivity(new Intent(AdActivity.this, MainActivity.class));
+                    if(BmobUser.isLogin()){
+                        startActivity(new Intent(AdActivity.this, MainActivity.class));
+                    }else {
+                        startActivity(new Intent(AdActivity.this, LoginActivity.class));
+                    }
                 }
                 finish();
             }

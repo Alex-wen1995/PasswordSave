@@ -8,7 +8,7 @@ apply plugin: 'com.google.protobuf'
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
-
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.passwordsave"
         minSdkVersion 23
@@ -105,5 +105,8 @@ dependencies {
 
     //手势密码
     implementation 'com.github.ihsg:PatternLocker:2.5.7'
+
+    //后端云Bmob
+    implementation 'io.github.bmob:android-sdk:3.8.4'
 
 }
