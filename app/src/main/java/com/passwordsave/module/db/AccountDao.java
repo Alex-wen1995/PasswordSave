@@ -7,6 +7,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.passwordsave.module.local_account.Account2;
+
 import java.util.List;
 
 import io.reactivex.Flowable;
@@ -27,22 +29,22 @@ public interface AccountDao {
      * <p>
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    List<Long> insertAccount(Account... accounts);
+    List<Long> insertAccount(Account2... accounts);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    int updateAccount(Account... accounts);
+    int updateAccount(Account2... accounts);
 
     @Delete
-    void deleteAccount(Account... accounts);
+    void deleteAccount(Account2... accounts);
 
-    @Query("SELECT * FROM Account")
-    Flowable<List<Account>> loadAllAccount();
+    @Query("SELECT * FROM Account2")
+    Flowable<List<Account2>> loadAllAccount();
 
-    @Query("SELECT * FROM Account WHERE title LIKE +:search OR account LIKE :search")
-    Flowable<List<Account>> loadAccountByKeyword(String search);
+    @Query("SELECT * FROM Account2 WHERE title LIKE +:search OR account LIKE :search")
+    Flowable<List<Account2>> loadAccountByKeyword(String search);
 
-    @Query("SELECT * FROM Account WHERE isCollect == :isCollect and (title LIKE +:search OR account LIKE :search)")
-    Flowable<List<Account>> loadAccountByCollect(boolean isCollect,String search);
+    @Query("SELECT * FROM Account2 WHERE isCollect == :isCollect and (title LIKE +:search OR account LIKE :search)")
+    Flowable<List<Account2>> loadAccountByCollect(boolean isCollect, String search);
 
 
 }

@@ -1,11 +1,11 @@
-package com.passwordsave.module.db;
+package com.passwordsave.module.local_account;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class Account {
+public class Account2 {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
@@ -21,7 +21,7 @@ public class Account {
     @Ignore
     @Override
     public String toString() {
-        return "Account{" +
+        return "Account2{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", account='" + account + '\'' +

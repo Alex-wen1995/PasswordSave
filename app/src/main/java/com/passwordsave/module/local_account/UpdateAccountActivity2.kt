@@ -1,15 +1,13 @@
-package com.passwordsave.module.account
+package com.passwordsave.module.local_account
 
-import android.util.Log
 import android.view.View
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
-import com.passwordsave.module.db.Account
 import com.socks.library.KLog
 import kotlinx.android.synthetic.main.activity_add_account.*
 import kotlinx.android.synthetic.main.layout_top.*
 
-class UpdateAccountActivity : BaseActivity() {
+class UpdateAccountActivity2 : BaseActivity() {
     var is_collect = false
     var id = 0
     override fun layoutId(): Int {
@@ -50,7 +48,7 @@ class UpdateAccountActivity : BaseActivity() {
         }
 
         btn_save.setOnClickListener {
-            val data = Account()
+            val data = Account2()
             data.id = id
             data.title = et_title.text.toString()
             data.account = et_account.text.toString()
