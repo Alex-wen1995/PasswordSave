@@ -43,8 +43,6 @@
         <activity android:name=".module.setting.pattern_lock.WholePatternCancelActivity" />
         <activity android:name=".module.login.LoginActivity" />
         <activity android:name=".module.login.RegisterActivity" />
-        <activity android:name=".module.local_account.UpdateAccountActivity2" />
-        <activity android:name=".module.local_account.AddAccountActivity2" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
