@@ -7,6 +7,7 @@ import cn.bmob.v3.listener.UpdateListener
 import com.google.android.material.snackbar.Snackbar
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
+import com.passwordsave.utils.DialogUtils
 import com.passwordsave.utils.showToast
 import kotlinx.android.synthetic.main.activity_forget_pwd.*
 import kotlinx.android.synthetic.main.activity_login.*
@@ -36,9 +37,11 @@ class ForgetPwdActivity : BaseActivity() {
      * 邮箱重置密码
      */
     private fun resetPasswordByEmail() {
+        val dialog = DialogUtils.showDialogForLoading(this)
         val email = et_account.text.toString()
         BmobUser.resetPasswordByEmail(email, object : UpdateListener() {
             override fun done(e: BmobException?) {
+                dialog.dismiss()
                 if (e == null) {
                     showToast("重置密码请求成功，请到" + email + "邮箱进行密码重置操作")
                     finish()
