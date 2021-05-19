@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.passwordsave.module.local_account.Account2;
+import com.passwordsave.module.account.Account2;
 
 import java.util.List;
 
@@ -29,13 +29,18 @@ public interface AccountDao {
      * <p>
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    List<Long> insertAccount(Account2... accounts);
+    void insertAccount(Account2... accounts);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     int updateAccount(Account2... accounts);
 
     @Delete
     void deleteAccount(Account2... accounts);
+
+    //删全部
+    @Query("DELETE FROM Account2")
+    void deleteAll();
+
 
     @Query("SELECT * FROM Account2")
     Flowable<List<Account2>> loadAllAccount();

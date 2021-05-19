@@ -1,7 +1,7 @@
-package com.passwordsave.module.net_account;
+package com.passwordsave.module.account;
 
 import cn.bmob.v3.BmobObject;
-
+//bmob实体类
 public class Account extends BmobObject {
     public int id;
     public String user_id;

@@ -1,4 +1,4 @@
-package com.passwordsave.module.net_account
+package com.passwordsave.module.account
 
 import android.util.Log
 import android.view.View
@@ -7,7 +7,7 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.SaveListener
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
-import com.passwordsave.module.local_account.Account2
+import com.passwordsave.module.account.Account
 import com.passwordsave.utils.showToast
 import com.socks.library.KLog
 import kotlinx.android.synthetic.main.activity_add_account.*

@@ -1,4 +1,4 @@
-package com.passwordsave.module.net_account
+package com.passwordsave.module.account
 
 import android.annotation.SuppressLint
 import android.content.ClipData
@@ -9,16 +9,16 @@ import android.text.InputType
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
-import cn.bmob.v3.BmobQuery
-import cn.bmob.v3.BmobUser
 import cn.bmob.v3.exception.BmobException
-import cn.bmob.v3.listener.FindListener
+import cn.bmob.v3.listener.UpdateListener
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.passwordsave.R
 import com.passwordsave.base.BaseFragment
-import com.passwordsave.module.local_account.Account2
 import com.passwordsave.utils.showToast
+import com.socks.library.KLog
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_account.*
 import kotlinx.android.synthetic.main.item_account.view.*
 import kotlinx.android.synthetic.main.layout_top.*
@@ -76,44 +76,21 @@ class AccountFragment : BaseFragment() {
         getList()
     }
 
+
+    @SuppressLint("CheckResult")
     private fun getList() {
-        val eq1: BmobQuery<Account> = BmobQuery()
-        eq1.addWhereEqualTo("username", BmobUser.getCurrentUser().username) //查询当前用户
-
-        //关键字查询title或者账号--这个需要使用到复合或查询（or）
-        val eq3: BmobQuery<Account> = BmobQuery()
-        eq3.addWhereEqualTo("title", et_search.text.toString())
-        val eq4: BmobQuery<Account> = BmobQuery()
-        eq4.addWhereEqualTo("account", et_search.text.toString())
-        val queries: MutableList<BmobQuery<Account>> = ArrayList()
-        queries.add(eq3)
-        queries.add(eq4)
-        val mainQuery: BmobQuery<Account> = BmobQuery()
-        val or : BmobQuery<Account> = mainQuery.or(queries)
-
-        //组装完整的and条件
-        val andQuerys: MutableList<BmobQuery<Account>> = ArrayList()
-        andQuerys.add(eq1)
-        andQuerys.add(or)
-
-        val query: BmobQuery<Account> = BmobQuery("Account")
-        query.and(andQuerys)
-        query.order("-createdAt")
-            .findObjects(object : FindListener<Account?>() {
-                override fun done(list: List<Account?>?, e: BmobException?) {
-                    onRefreshComplete()
-                    if (e == null) {
-                        if(list!!.isEmpty()){
-                            mAdapter.setNewData(mutableListOf())
-                            showToast("暂无数据！")
-                        }else{
-                            mAdapter.setNewData(list)
-                        }
-                    } else {
-                        showToast("暂无数据！")
-                    }
+        mAppDatabase.accountDao()!!
+//            .loadAllAccount()
+            .loadAccountByKeyword("%"+et_search.text.toString()+"%")//模糊搜索
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { t ->
+                if (t != null) {
+                    KLog.e("t",t.size)
+                    mAdapter.setNewData(t)
                 }
-            })
+                onRefreshComplete()
+            }
     }
 
     private fun onRefreshComplete() { //刷新或加载更多完成
@@ -123,13 +100,13 @@ class AccountFragment : BaseFragment() {
         }
     }
 
-    inner class AccountAdapter(data: MutableList<Account>) :
-        BaseQuickAdapter<Account, BaseViewHolder>(
+    inner class AccountAdapter(data: MutableList<Account2>) :
+        BaseQuickAdapter<Account2, BaseViewHolder>(
             R.layout.item_account,
             data
         ) {
         @SuppressLint("SetTextI18n")
-        override fun convert(helper: BaseViewHolder, item: Account) {
+        override fun convert(helper: BaseViewHolder, item: Account2) {
             val itemView = helper.itemView
             itemView.item_title.text = item.title
             itemView.item_account.text = item.account
@@ -160,9 +137,23 @@ class AccountFragment : BaseFragment() {
                 copyText(itemView.item_pwd)
             }
             itemView.delete_layout.setOnClickListener {
-                val data = Account2()
+                val data = Account2()//删除本地数据
                 data.id = item.id
+
+                val b_data = Account()//删除bmob数据
+                b_data.objectId = item.objectId
+
                 mAppDatabase.accountDao()!!.deleteAccount(data)
+                b_data.delete(object : UpdateListener(){
+                    override fun done(e: BmobException?) {
+                        if(e==null){
+                            showToast("删除成功")
+                        }else{
+                            showToast("删除失败")
+                        }
+                    }
+                })
+
             }
 
             itemView.cl_item.setOnClickListener {
@@ -172,6 +163,7 @@ class AccountFragment : BaseFragment() {
                         UpdateAccountActivity::class.java
                     )
                         .putExtra("id", item.id)
+                        .putExtra("objectId", item.objectId)
                         .putExtra("title", item.title)
                         .putExtra("account", item.account)
                         .putExtra("password", item.password)

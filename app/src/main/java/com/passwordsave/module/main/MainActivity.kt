@@ -1,15 +1,24 @@
 package com.passwordsave.module.main
 
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import cn.bmob.v3.BmobQuery
+import cn.bmob.v3.BmobUser
+import cn.bmob.v3.exception.BmobException
+import cn.bmob.v3.listener.FindListener
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
-import com.passwordsave.module.net_account.AccountFragment
 import com.passwordsave.module.collect.CollectFragment
+import com.passwordsave.module.account.Account2
+import com.passwordsave.module.account.Account
+import com.passwordsave.module.account.AccountFragment
 import com.passwordsave.module.setting.SettingFragment
+import com.passwordsave.utils.showToast
+import com.socks.library.KLog
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
@@ -72,6 +81,11 @@ class MainActivity : BaseActivity() {
         setSelect(0)
     }
 
+    override fun onResume() {
+        super.onResume()
+        getList()
+    }
+
     private fun setSelect(i: Int) {
         val fm: FragmentManager = supportFragmentManager
         val transaction: FragmentTransaction = fm.beginTransaction()
@@ -100,6 +114,41 @@ class MainActivity : BaseActivity() {
         }
         transaction.commit()
     }
+
+    private fun getList() {
+        val query: BmobQuery<Account> = BmobQuery("Account")
+        query.addWhereEqualTo("username", BmobUser.getCurrentUser().username) //查询当前用户
+        query.order("-createdAt")
+            .findObjects(object : FindListener<Account?>() {
+                override fun done(list: List<Account?>?, e: BmobException?) {
+                    if (e == null) {
+                        if(list!!.isEmpty()){
+                            showToast("暂无数据！")
+                        }else{
+                            mAppDatabase.accountDao()!!.deleteAll()
+                            for (i in list){
+                                val data =
+                                    Account2()
+                                i!!.let {
+                                    data.title =i.title
+                                    data.objectId =i.objectId
+                                    data.account = i.account
+                                    data.password = i.password
+                                    data.remark = i.remark
+                                    data.isCollect = i.isCollect
+                                    KLog.e("data",data.toString())
+                                    mAppDatabase.accountDao()!!.insertAccount(data)
+
+                                }
+                            }
+                        }
+                    } else {
+                        showToast("暂无数据！")
+                    }
+                }
+            })
+    }
+
 
     private fun hideFragment(transaction: FragmentTransaction) {
         if (mTab1 != null) {

@@ -13,8 +13,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.passwordsave.R
 import com.passwordsave.base.BaseFragment
-import com.passwordsave.module.net_account.AddAccountActivity
-import com.passwordsave.module.local_account.Account2
+import com.passwordsave.module.account.AddAccountActivity
+import com.passwordsave.module.account.Account2
+import com.passwordsave.module.account.UpdateAccountActivity
 import com.passwordsave.utils.showToast
 import com.socks.library.KLog
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -68,13 +69,13 @@ class CollectFragment : BaseFragment() {
     @SuppressLint("CheckResult")
     private fun getList() {
         mAppDatabase.accountDao()!!
-            .loadAccountByCollect(true,"%"+et_search.text.toString()+"%")//模糊搜索
+            .loadAccountByCollect(true, "%" + et_search.text.toString() + "%")//模糊搜索
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { t ->
                 onRefreshComplete()
                 if (t != null) {
-                    KLog.e("t",t.size)
+                    KLog.e("t", t.size)
                     mAdapter.setNewData(t)
                 }
             }
@@ -96,18 +97,20 @@ class CollectFragment : BaseFragment() {
             itemView.item_title.text = item.title
             itemView.item_account.text = item.account
             itemView.item_pwd.text = item.password
-            if(item.isShow){
+            if (item.isShow) {
                 itemView.iv_eye.setImageResource(R.drawable.ic_eye_2)
-            }else{
+            } else {
                 itemView.iv_eye.setImageResource(R.drawable.ic_eye_1)
             }
             itemView.iv_eye.setOnClickListener {
-                if(item.isShow){
+                if (item.isShow) {
                     itemView.iv_eye.setImageResource(R.drawable.ic_eye_1)
-                    itemView.item_pwd.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                }else{
+                    itemView.item_pwd.inputType =
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                } else {
                     itemView.iv_eye.setImageResource(R.drawable.ic_eye_2)
-                    itemView.item_pwd.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+                    itemView.item_pwd.inputType =
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
                 }
                 item.isShow = !item.isShow
             }
@@ -125,13 +128,26 @@ class CollectFragment : BaseFragment() {
                 mAppDatabase.accountDao()!!.deleteAccount(data)
             }
             itemView.cl_item.setOnClickListener {
-
+                startActivity(
+                    Intent(
+                        requireContext(),
+                        UpdateAccountActivity::class.java
+                    )
+                        .putExtra("id", item.id)
+                        .putExtra("objectId", item.objectId)
+                        .putExtra("title", item.title)
+                        .putExtra("account", item.account)
+                        .putExtra("password", item.password)
+                        .putExtra("remark", item.remark)
+                        .putExtra("isCollect", item.isCollect)
+                )
             }
         }
     }
 
-    fun copyText(tv : TextView){
-        val manager =requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    fun copyText(tv: TextView) {
+        val manager =
+            requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clipData = ClipData.newPlainText("text", tv.text)
         manager.setPrimaryClip(clipData)
         showToast("文本已复制")

@@ -1,14 +1,14 @@
-package com.passwordsave.module.local_account;
+package com.passwordsave.module.account;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-
+//本地room数据库实体类
 @Entity
-public class Account2 {
+public class Account2  {
     @PrimaryKey(autoGenerate = true)
     public int id;
-
+    public String objectId;
     public String title;
     public String account;
     public String password;
@@ -16,7 +16,7 @@ public class Account2 {
     public boolean isCollect;
 
     @Ignore
-    public boolean isShow = false;
+    public transient boolean isShow = false;
 
     @Ignore
     @Override

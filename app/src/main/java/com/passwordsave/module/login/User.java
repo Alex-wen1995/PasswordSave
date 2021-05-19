@@ -1,6 +1,6 @@
 package com.passwordsave.module.login;
 
-import com.passwordsave.module.local_account.Account2;
+import com.passwordsave.module.account.Account2;
 
 import java.util.List;
 

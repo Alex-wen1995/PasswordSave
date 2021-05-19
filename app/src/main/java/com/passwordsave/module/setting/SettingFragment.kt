@@ -1,6 +1,5 @@
 package com.passwordsave.module.setting
 
-import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
