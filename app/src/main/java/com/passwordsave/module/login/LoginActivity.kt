@@ -32,6 +32,10 @@ class LoginActivity : BaseActivity() {
         tv_login.setOnClickListener {
             loginByEmailPwd()
         }
+
+        tv_forget.setOnClickListener {
+            startActivityNoParam(ForgetPwdActivity::class.java)
+        }
     }
 
 

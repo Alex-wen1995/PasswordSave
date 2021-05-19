@@ -82,8 +82,10 @@ class CollectFragment : BaseFragment() {
     }
 
     private fun onRefreshComplete() { //刷新或加载更多完成
-        smartLayout.finishRefresh()
-        smartLayout.finishLoadMore()
+        if (smartLayout != null) {
+            smartLayout.finishRefresh()
+            smartLayout.finishLoadMore()
+        }
     }
 
     inner class AccountAdapter(data: MutableList<Account2>) :

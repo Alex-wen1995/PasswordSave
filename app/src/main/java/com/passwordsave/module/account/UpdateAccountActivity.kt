@@ -58,7 +58,6 @@ class UpdateAccountActivity : BaseActivity() {
         btn_save.setOnClickListener {
             val data = Account2()
             data.id = id
-            data.objectId = objectId
             data.title = et_title.text.toString()
             data.account = et_account.text.toString()
             data.password = et_pwd.text.toString()
@@ -75,7 +74,6 @@ class UpdateAccountActivity : BaseActivity() {
             b_data.password = et_pwd.text.toString()
             b_data.remark = et_remark.text.toString()
             b_data.isCollect = is_collect
-            data.objectId = objectId
 
 
             b_data.update(objectId, object : UpdateListener() {
