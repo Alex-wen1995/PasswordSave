@@ -1,100 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/colorWhite"
+    app:cardCornerRadius="@dimen/dp_12"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_24"
-        android:gravity="center"
-        android:text="温馨提示"
-        android:textColor="@color/colorBlack" />
-
-    <TextView
-        android:layout_marginTop="@dimen/dp_16"
-        android:layout_marginStart="@dimen/dp_12"
-        android:layout_marginEnd="@dimen/dp_12"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="尊敬的用户欢迎使用账号管家"
-        android:textColor="@color/colorBlack" />
-
-    <TextView
-        android:layout_marginStart="@dimen/dp_12"
-        android:layout_marginEnd="@dimen/dp_12"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="在您使用前请仔细阅读《用户协议》和《隐私政策》，我们将严格遵守您同意的各项条款使用您的信息，特向您说明如下："
-        android:textColor="@color/colorBlack" />
-    <TextView
-        android:layout_marginStart="@dimen/dp_12"
-        android:layout_marginEnd="@dimen/dp_12"
-        android:layout_marginTop="@dimen/dp_24"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="1、获取手机存储权限：用于实现用户记录的账号数据信息进行本地化存储、读取；"
-        android:textColor="@color/colorBlack" />
-    <TextView
-        android:layout_marginStart="@dimen/dp_12"
-        android:layout_marginEnd="@dimen/dp_12"
-        android:layout_marginTop="@dimen/dp_24"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="2、如果您不同意调用以上必要权限或功能，或不同意我们收集并使用以上信息，将导致本应用无法正常运行；"
-        android:textColor="@color/colorBlack" />
     <LinearLayout
-        android:layout_marginTop="@dimen/dp_12"
-        android:layout_marginStart="@dimen/dp_12"
-        android:layout_marginEnd="@dimen/dp_12"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/tv_term_1"
-            android:layout_width="wrap_content"
-            android:textSize="@dimen/sp_12"
-            android:textColor="@color/colorPrimary"
-            android:text="《用户协议》"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:textColor="@color/colorPrimary"
-            android:id="@+id/tv_term_2"
-            android:layout_width="wrap_content"
-            android:textSize="@dimen/sp_12"
-            android:text="《隐私政策》"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginStart="@dimen/dp_12"
-        android:layout_marginEnd="@dimen/dp_12"
-        android:layout_marginTop="@dimen/dp_24"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/tv_refuse"
-            android:paddingTop="@dimen/dp_8"
-            android:paddingBottom="@dimen/dp_8"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="不同意"
-            android:background="#f2f2f2"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
             android:gravity="center"
-            android:textColor="#5A5959"
-            android:layout_weight="1"/>
+            android:layout_marginTop="@dimen/dp_24"
+
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="@dimen/dp_32"
+                android:adjustViewBounds="true"
+                android:src="@drawable/logo"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginStart="@dimen/dp_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="温馨提示"
+                android:textColor="@color/colorBlack" />
+        </LinearLayout>
+
+
         <TextView
-            android:id="@+id/tv_agree"
-            android:paddingTop="@dimen/dp_8"
-            android:paddingBottom="@dimen/dp_8"
-            android:layout_width="0dp"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginEnd="@dimen/dp_12"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="同意并继续"
-            android:background="@color/colorPrimary"
-            android:textSize="@dimen/sp_14"
-            android:gravity="center"
-            android:textColor="@color/colorWhite"
-            android:layout_weight="1"/>
+            android:text="尊敬的用户欢迎使用账号管家"
+            android:textColor="@color/colorBlack" />
+
+        <TextView
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginEnd="@dimen/dp_12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="在您使用前请仔细阅读《用户协议》和《隐私政策》，我们将严格遵守您同意的各项条款使用您的信息，特向您说明如下："
+            android:textColor="@color/colorBlack" />
+        <TextView
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginEnd="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1、获取手机存储权限：用于实现用户记录的账号数据信息进行本地化存储、读取；"
+            android:textColor="@color/colorBlack" />
+        <TextView
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginEnd="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2、如果您不同意调用以上必要权限或功能，或不同意我们收集并使用以上信息，将导致本应用无法正常运行；"
+            android:textColor="@color/colorBlack" />
+        <LinearLayout
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginEnd="@dimen/dp_12"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_term_1"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/sp_12"
+                android:textColor="@color/colorPrimary"
+                android:text="《用户协议》"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textColor="@color/colorPrimary"
+                android:id="@+id/tv_term_2"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/sp_12"
+                android:text="《隐私政策》"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginEnd="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginBottom="@dimen/dp_12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_refuse"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingBottom="@dimen/dp_8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="不同意"
+                android:textSize="@dimen/sp_14"
+                android:background="@drawable/no_agree_bg"
+                android:gravity="center"
+                android:textColor="#5A5959"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_marginStart="@dimen/dp_12"
+                android:id="@+id/tv_agree"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingBottom="@dimen/dp_8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="同意并继续"
+                android:background="@drawable/agree_bg"
+                android:textSize="@dimen/sp_14"
+                android:gravity="center"
+                android:textColor="@color/colorWhite"
+                android:layout_weight="1"/>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+</androidx.cardview.widget.CardView>
