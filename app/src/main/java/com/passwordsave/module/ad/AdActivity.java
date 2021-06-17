@@ -9,6 +9,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,8 +21,11 @@ import com.passwordsave.module.login.LoginActivity;
 import com.passwordsave.module.main.MainActivity;
 import com.passwordsave.module.main.Term1Activity;
 import com.passwordsave.module.main.Term2Activity;
-import com.passwordsave.module.setting.pattern_lock.WholePatternCheckingActivity;
+import com.passwordsave.utils.ExtensionsKt;
+import com.socks.library.KLog;
 import com.tencent.mmkv.MMKV;
+import com.wei.android.lib.fingerprintidentify.FingerprintIdentify;
+import com.wei.android.lib.fingerprintidentify.base.BaseFingerprint;
 
 import java.util.List;
 
@@ -53,6 +57,12 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
             Manifest.permission.READ_PHONE_STATE,  //设备信息
 
     };
+
+    /**
+     * 指纹识别
+     * */
+    private FingerprintIdentify mFingerprintIdentify;
+    private static final int MAX_AVAILABLE_TIMES = 5;
 
     private void checkPermission() {
         EasyPermissions.requestPermissions(this, getString(R.string.need_permission), 0, PERMISSION);
@@ -118,30 +128,78 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
              */
             @Override
             public void onFinish() {
-                if (MMKV.defaultMMKV().decodeBool("hasLock", false)) {
-                    startActivity(new Intent(AdActivity.this, WholePatternCheckingActivity.class));
+//                if (MMKV.defaultMMKV().decodeBool("hasLock", false)) {
+//                    startActivity(new Intent(AdActivity.this, WholePatternCheckingActivity.class));
+//                } else {
+//                    if(BmobUser.isLogin()){
+//                        startActivity(new Intent(AdActivity.this, MainActivity.class));
+//                    }else {
+//                        startActivity(new Intent(AdActivity.this, LoginActivity.class));
+//                    }
+//                }
+                if (MMKV.defaultMMKV().decodeBool("hasFingerPrint", false)) {
+                    mFingerprintIdentify = new FingerprintIdentify(getApplicationContext());
+                    mFingerprintIdentify.setSupportAndroidL(true);
+                    mFingerprintIdentify.setExceptionListener(new BaseFingerprint.ExceptionListener() {
+                        @Override
+                        public void onCatchException(Throwable exception) {
+                        }
+                    });
+                    mFingerprintIdentify.init();
+                    if (!mFingerprintIdentify.isFingerprintEnable()) {
+                        KLog.e("isFingerprintEnable","请检查指纹硬件可用并已经录入指纹");
+                        Toast.makeText(AdActivity.this,getString(R.string.fingerprintEnable_hint),Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    startCheck();
                 } else {
-                    if(BmobUser.isLogin()){
+                    if (BmobUser.isLogin()) {
                         startActivity(new Intent(AdActivity.this, MainActivity.class));
-                    }else {
+                    } else {
                         startActivity(new Intent(AdActivity.this, LoginActivity.class));
                     }
+                    finish();
                 }
-                finish();
             }
         };
         if (MMKV.defaultMMKV().getBoolean("read_term", false)) {
-            if (hasPermission()){
+            if (hasPermission()) {
                 timerStart();
-            }else {
+            } else {
                 checkPermission();
             }
         } else {
             showMsgDialog(this);
         }
-
     }
 
+    private void startCheck(){
+        mFingerprintIdentify.startIdentify(MAX_AVAILABLE_TIMES, new BaseFingerprint.IdentifyListener() {
+            @Override
+            public void onSucceed() {
+                startActivity(new Intent(AdActivity.this, MainActivity.class));
+                finish();
+            }
+
+            @Override
+            public void onNotMatch(int availableTimes) {
+                ExtensionsKt.showToast(AdActivity.this,getString(R.string.not_match, availableTimes));
+            }
+
+            @Override
+            public void onFailed(boolean isDeviceLocked) {
+                ExtensionsKt.showToast(AdActivity.this,getString(R.string.failed));
+                finish();
+            }
+
+            @Override
+            public void onStartFailedByDeviceLocked() {
+                ExtensionsKt.showToast(AdActivity.this,getString(R.string.start_failed));
+                KLog.e("onStartFailedByDeviceLocked","设备暂时锁定,应用关闭");
+                finish();
+            }
+        });
+    }
 
     /**
      * 取消倒计时
@@ -153,9 +211,18 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        mFingerprintIdentify.cancelIdentify();
+
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         timerCancel();
+        mFingerprintIdentify.cancelIdentify();
+
     }
 
     /**
@@ -190,7 +257,7 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
                 alertDialog.dismiss();
                 if (!hasPermission()) {
                     checkPermission();
-                }else {
+                } else {
                     timerStart();
                 }
 

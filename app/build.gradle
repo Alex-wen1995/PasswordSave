@@ -109,4 +109,6 @@ dependencies {
     //后端云Bmob
     implementation 'io.github.bmob:android-sdk:3.8.4'
 
+    //指纹识别
+    implementation 'com.github.uccmawei:FingerprintIdentify:1.2.6'
 }

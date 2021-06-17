@@ -28,14 +28,6 @@ class PatternSettingActivity : BaseActivity() {
 
     override fun initListener() {
         iv_back.setOnClickListener { finish() }
-//        sw.setOnClickListener { compoundButton, b ->
-//            if (b) {
-//                WholePatternSettingActivity.startAction(this@PatternSettingActivity)
-//            } else {
-//                WholePatternCheckingActivity.startAction(this@PatternSettingActivity)
-//            }
-//        }
-
         sw.setOnClickListener {
             if(MMKV.defaultMMKV().decodeBool("hasLock", false)){
                 WholePatternCancelActivity.startAction(this@PatternSettingActivity)
