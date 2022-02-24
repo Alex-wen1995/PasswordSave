@@ -7,5 +7,7 @@
     <color name="colorBlack">#000000</color>
     <color name="color_gray">#668a989e</color>
     <color name="color_red">#F44336</color>
+    <color name="color_coin">#F3D16E</color>
+    <color name="color_random">#756E7C</color>
 
 </resources>

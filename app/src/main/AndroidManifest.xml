@@ -50,6 +50,9 @@
         <activity android:name=".module.scanner.ScannerKit" />
         <activity android:name=".module.setting.SettingActivity" />
         <activity android:name=".module.account.AccountActivity" />
+        <activity android:name=".module.random.coin.CoinActivity" />
+        <activity android:name=".module.random.RandomActivity" />
+        <activity android:name=".module.random.dice.DiceActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

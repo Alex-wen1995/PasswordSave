@@ -37,7 +37,7 @@ class AddAccountActivity : BaseActivity() {
         }
 
         btn_save.setOnClickListener {
-            val data = Account2()
+            val data = Account()
             data.title = et_title.text.toString()
             data.account = et_account.text.toString()
             data.password = et_pwd.text.toString()

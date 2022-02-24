@@ -3,7 +3,6 @@ package com.passwordsave.module.account
 import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.text.InputType
 import android.view.View
@@ -14,7 +13,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
-import com.passwordsave.base.BaseFragment
 import com.passwordsave.utils.showToast
 import com.socks.library.KLog
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,7 +25,7 @@ import java.util.*
 
 class AccountActivity : BaseActivity() {
     private val mAdapter = AccountAdapter(arrayListOf())
-    private val dataList: ArrayList<Account2> =
+    private val dataList: ArrayList<Account> =
         ArrayList()
 
 
@@ -106,13 +104,13 @@ class AccountActivity : BaseActivity() {
         }
     }
 
-    inner class AccountAdapter(data: MutableList<Account2>) :
-        BaseQuickAdapter<Account2, BaseViewHolder>(
+    inner class AccountAdapter(data: MutableList<Account>) :
+        BaseQuickAdapter<Account, BaseViewHolder>(
             R.layout.item_account,
             data
         ) {
         @SuppressLint("SetTextI18n")
-        override fun convert(helper: BaseViewHolder, item: Account2) {
+        override fun convert(helper: BaseViewHolder, item: Account) {
             val itemView = helper.itemView
             itemView.item_title.text = item.title
             itemView.item_account.text = item.account
@@ -143,7 +141,7 @@ class AccountActivity : BaseActivity() {
                 copyText(itemView.item_pwd)
             }
             itemView.delete_layout.setOnClickListener {
-                val data = Account2()//删除本地数据
+                val data = Account()//删除本地数据
                 data.id = item.id
                 mAppDatabase.accountDao()!!.deleteAccount(data)
 

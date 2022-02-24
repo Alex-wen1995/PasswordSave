@@ -1,6 +1,6 @@
 package com.passwordsave.module.login;
 
-import com.passwordsave.module.account.Account2;
+import com.passwordsave.module.account.Account;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * @author quan
  */
 public class User {
-    private List<Account2> accounts;
+    private List<Account> accounts;
     private String  pwdStr;
 
     public String getPwdStr() {
@@ -21,11 +21,11 @@ public class User {
         this.pwdStr = pwdStr;
     }
 
-    public List<Account2> getAccounts() {
+    public List<Account> getAccounts() {
         return accounts;
     }
 
-    public void setAccounts(List<Account2> accounts) {
+    public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
     }
 }

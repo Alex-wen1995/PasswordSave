@@ -5,7 +5,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 //本地room数据库实体类
 @Entity
-public class Account2  {
+public class Account {
     @PrimaryKey(autoGenerate = true)
     public int id;
     public String title;

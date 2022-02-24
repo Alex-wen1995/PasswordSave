@@ -5,7 +5,6 @@ import android.view.View
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
 
-import com.passwordsave.utils.showToast
 import com.socks.library.KLog
 import kotlinx.android.synthetic.main.activity_add_account.*
 import kotlinx.android.synthetic.main.layout_top.*
@@ -21,7 +20,6 @@ class UpdateAccountActivity : BaseActivity() {
     override fun initData() {
         top_title.text = "更新账号"
         iv_back.visibility = View.VISIBLE
-        iv_collect.visibility = View.VISIBLE
     }
 
     override fun initView() {
@@ -52,7 +50,7 @@ class UpdateAccountActivity : BaseActivity() {
         }
 
         btn_save.setOnClickListener {
-            val data = Account2()
+            val data = Account()
             data.id = id
             data.title = et_title.text.toString()
             data.account = et_account.text.toString()

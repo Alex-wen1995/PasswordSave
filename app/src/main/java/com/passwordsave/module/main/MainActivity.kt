@@ -5,16 +5,16 @@ import android.Manifest
 import android.content.Intent
 import android.util.Log
 import android.view.inputmethod.EditorInfo
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.PermissionUtils
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
 import com.passwordsave.module.account.AccountActivity
 import com.passwordsave.module.account.AddAccountActivity
+import com.passwordsave.module.random.RandomActivity
 import com.passwordsave.module.scanner.ScannerKit
 import com.passwordsave.module.setting.SettingActivity
 import com.passwordsave.utils.showToast
-import kotlinx.android.synthetic.main.fragment_account.*
-import kotlinx.android.synthetic.main.fragment_account.et_search
 import kotlinx.android.synthetic.main.fragment_account.fab
 import kotlinx.android.synthetic.main.fragment_collect.*
 import kotlinx.android.synthetic.main.layout_top.*
@@ -55,7 +55,7 @@ class MainActivity : BaseActivity(){
             }
         }
         menu_3.setOnClickListener {
-
+            ActivityUtils.startActivity(RandomActivity::class.java)
         }
         menu_4.setOnClickListener {
             startActivity(Intent(this, SettingActivity::class.java))
