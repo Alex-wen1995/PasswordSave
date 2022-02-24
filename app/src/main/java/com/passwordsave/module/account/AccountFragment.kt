@@ -9,8 +9,6 @@ import android.text.InputType
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
-import cn.bmob.v3.exception.BmobException
-import cn.bmob.v3.listener.UpdateListener
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.passwordsave.R
@@ -139,31 +137,15 @@ class AccountFragment : BaseFragment() {
             itemView.delete_layout.setOnClickListener {
                 val data = Account2()//删除本地数据
                 data.id = item.id
-
-                val b_data = Account()//删除bmob数据
-                b_data.objectId = item.objectId
-
                 mAppDatabase.accountDao()!!.deleteAccount(data)
-                b_data.delete(object : UpdateListener(){
-                    override fun done(e: BmobException?) {
-                        if(e==null){
-                            showToast("删除成功")
-                        }else{
-                            showToast("删除失败")
-                        }
-                    }
-                })
+
 
             }
 
             itemView.cl_item.setOnClickListener {
                 startActivity(
-                    Intent(
-                        requireContext(),
-                        UpdateAccountActivity::class.java
-                    )
+                    Intent(requireContext(), UpdateAccountActivity::class.java)
                         .putExtra("id", item.id)
-                        .putExtra("objectId", item.objectId)
                         .putExtra("title", item.title)
                         .putExtra("account", item.account)
                         .putExtra("password", item.password)

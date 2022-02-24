@@ -8,7 +8,6 @@ import androidx.room.PrimaryKey;
 public class Account2  {
     @PrimaryKey(autoGenerate = true)
     public int id;
-    public String objectId;
     public String title;
     public String account;
     public String password;

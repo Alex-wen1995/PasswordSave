@@ -46,7 +46,6 @@
         <activity android:name=".module.setting.pattern_lock.WholePatternCancelActivity" />
         <activity android:name=".module.login.LoginActivity" />
         <activity android:name=".module.login.RegisterActivity" />
-        <activity android:name=".module.login.ForgetPwdActivity" />
         <activity android:name=".module.setting.fingerprint_identification.FingerSetActivity" />
 
         <provider
@@ -57,11 +56,6 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
-
-        <provider
-            android:name="cn.bmob.v3.util.BmobContentProvider"
-            android:authorities="com.passwordsave.BmobContentProvider">
         </provider>
 
     </application>

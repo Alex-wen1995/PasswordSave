@@ -131,12 +131,8 @@ class CollectFragment : BaseFragment() {
             }
             itemView.cl_item.setOnClickListener {
                 startActivity(
-                    Intent(
-                        requireContext(),
-                        UpdateAccountActivity::class.java
-                    )
+                    Intent(requireContext(), UpdateAccountActivity::class.java)
                         .putExtra("id", item.id)
-                        .putExtra("objectId", item.objectId)
                         .putExtra("title", item.title)
                         .putExtra("account", item.account)
                         .putExtra("password", item.password)

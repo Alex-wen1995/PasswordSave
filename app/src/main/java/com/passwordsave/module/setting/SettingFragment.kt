@@ -3,7 +3,6 @@ package com.passwordsave.module.setting
 import android.content.Intent
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
-import cn.bmob.v3.BmobUser
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.passwordsave.R
@@ -61,7 +60,6 @@ class SettingFragment : BaseFragment() {
                             .setTitle("确认")
                             .setMessage("退出登录？")
                             .setPositiveButton("是") { _, _ -> //退出登錄
-                                BmobUser.logOut()
                                 AppActivityManager.getAppManager().finishAllActivity()
                                 startActivity(
                                     Intent(

@@ -6,7 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.room.Room
-import cn.bmob.v3.Bmob
+
 import com.passwordsave.module.db.AppDatabase
 import com.passwordsave.utils.PreviewImageLoader
 import com.previewlibrary.ZoomMediaLoader
@@ -57,8 +57,6 @@ class MyApplication : Application(){
         )
             .allowMainThreadQueries()
             .build()
-
-        Bmob.initialize(this, "af3e828c47bbae9babdeca144d563e2f","Bmob")
     }
 
     private val mActivityLifecycleCallbacks = object : ActivityLifecycleCallbacks {

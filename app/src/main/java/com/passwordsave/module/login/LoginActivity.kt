@@ -1,11 +1,7 @@
 package com.passwordsave.module.login
 
 import android.util.Log
-import cn.bmob.v3.BmobUser
-import cn.bmob.v3.exception.BmobException
-import cn.bmob.v3.listener.LogInListener
-import cn.bmob.v3.listener.SaveListener
-import com.google.android.material.snackbar.Snackbar
+
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
 import com.passwordsave.module.main.MainActivity
@@ -34,7 +30,7 @@ class LoginActivity : BaseActivity() {
         }
 
         tv_forget.setOnClickListener {
-            startActivityNoParam(ForgetPwdActivity::class.java)
+
         }
     }
 
@@ -47,22 +43,6 @@ class LoginActivity : BaseActivity() {
             showToast("邮箱或密码不能为空！")
             return
         }
-        BmobUser.loginByAccount(
-            et_account.text.toString(),
-            et_pwd.text.toString(),object : LogInListener<User?>() {
-                override fun done(user: User?, e: BmobException?) {
-                    if (e == null) {
-                        showToast("登录成功")
-                        startActivityNoParam(MainActivity::class.java)
-                        finish()
-                    } else {
-                        Log.e("loginByEmailPwd",e.message!!)
-                        if (e.errorCode==101){
-                            showToast("账号或密码错误")
-                        }
-                    }
-                }
-            })
     }
     override fun start() {
     }

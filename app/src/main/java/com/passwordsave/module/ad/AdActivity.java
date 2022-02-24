@@ -17,7 +17,6 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.bumptech.glide.Glide;
 import com.passwordsave.R;
-import com.passwordsave.module.login.LoginActivity;
 import com.passwordsave.module.main.MainActivity;
 import com.passwordsave.module.main.Term1Activity;
 import com.passwordsave.module.main.Term2Activity;
@@ -29,7 +28,6 @@ import com.wei.android.lib.fingerprintidentify.base.BaseFingerprint;
 
 import java.util.List;
 
-import cn.bmob.v3.BmobUser;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
@@ -128,15 +126,6 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
              */
             @Override
             public void onFinish() {
-//                if (MMKV.defaultMMKV().decodeBool("hasLock", false)) {
-//                    startActivity(new Intent(AdActivity.this, WholePatternCheckingActivity.class));
-//                } else {
-//                    if(BmobUser.isLogin()){
-//                        startActivity(new Intent(AdActivity.this, MainActivity.class));
-//                    }else {
-//                        startActivity(new Intent(AdActivity.this, LoginActivity.class));
-//                    }
-//                }
                 if (MMKV.defaultMMKV().decodeBool("hasFingerPrint", false)) {
                     mFingerprintIdentify = new FingerprintIdentify(getApplicationContext());
                     mFingerprintIdentify.setSupportAndroidL(true);
@@ -153,11 +142,7 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
                     }
                     startCheck();
                 } else {
-                    if (BmobUser.isLogin()) {
-                        startActivity(new Intent(AdActivity.this, MainActivity.class));
-                    } else {
-                        startActivity(new Intent(AdActivity.this, LoginActivity.class));
-                    }
+                    startActivity(new Intent(AdActivity.this, MainActivity.class));
                     finish();
                 }
             }
@@ -213,7 +198,9 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
     @Override
     protected void onPause() {
         super.onPause();
-        mFingerprintIdentify.cancelIdentify();
+        if(mFingerprintIdentify!=null){
+            mFingerprintIdentify.cancelIdentify();
+        }
 
     }
 
@@ -221,8 +208,9 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
     protected void onDestroy() {
         super.onDestroy();
         timerCancel();
-        mFingerprintIdentify.cancelIdentify();
-
+        if(mFingerprintIdentify!=null){
+            mFingerprintIdentify.cancelIdentify();
+        }
     }
 
     /**

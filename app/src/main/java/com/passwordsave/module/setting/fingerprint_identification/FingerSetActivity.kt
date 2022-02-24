@@ -1,6 +1,9 @@
 package com.passwordsave.module.setting.fingerprint_identification
 
+import android.app.Dialog
+import android.view.LayoutInflater
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
 import com.passwordsave.utils.showToast
@@ -51,12 +54,19 @@ class FingerSetActivity : BaseActivity() {
         }
     }
     fun startCheck(isOn: Boolean) {
+        val view  = LayoutInflater.from(this).inflate(R.layout.dialog_fingerprint, null)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this,R.style.CustomProgressDialog)
+        builder.setView(view)
+        val dialog = builder.create()
+        dialog.setCancelable(false)
+        dialog.show()
         sw.isChecked = !isOn
         mFingerprintIdentify.startIdentify(MAX_AVAILABLE_TIMES,
             object : BaseFingerprint.IdentifyListener {
                 override fun onSucceed() {
                     showToast(getString(R.string.fingerprint_success))
                     sw.isChecked = isOn
+                    dialog.dismiss()
                     MMKV.defaultMMKV().putBoolean("hasFingerPrint", isOn)
                 }
 
@@ -67,11 +77,13 @@ class FingerSetActivity : BaseActivity() {
 
                 override fun onFailed(isDeviceLocked: Boolean) {
                     sw.isChecked = !isOn
+                    dialog.dismiss()
                     showToast(getString(R.string.failed))
                 }
 
                 override fun onStartFailedByDeviceLocked() {
                     sw.isChecked = !isOn
+                    dialog.dismiss()
                     showToast(getString(R.string.start_failed_2))
                     finish()
                 }
