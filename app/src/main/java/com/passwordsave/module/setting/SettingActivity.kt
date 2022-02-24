@@ -1,12 +1,14 @@
 package com.passwordsave.module.setting
 
 import android.content.Intent
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.passwordsave.R
 import com.passwordsave.app.AppActivityManager
+import com.passwordsave.base.BaseActivity
 import com.passwordsave.base.BaseFragment
 import com.passwordsave.module.login.LoginActivity
 import com.passwordsave.module.main.Term2Activity
@@ -18,29 +20,37 @@ import kotlinx.android.synthetic.main.fragment_setting.*
 import kotlinx.android.synthetic.main.item_menu.view.*
 import kotlinx.android.synthetic.main.layout_top.*
 
-class SettingFragment : BaseFragment() {
-    override fun getLayoutId(): Int {
+class SettingActivity : BaseActivity() {
+
+    override fun layoutId(): Int {
         return R.layout.fragment_setting
+    }
+
+    override fun initData() {
     }
 
     override fun initView() {
         top_title.text = "设置"
-        rv_setting.layoutManager = LinearLayoutManager(requireContext())
+        iv_back.visibility = View.VISIBLE
+        rv_setting.layoutManager = LinearLayoutManager(this)
         rv_setting.adapter = SettingAdapter(
             R.layout.item_menu, arrayListOf(
                 SettingBean("指纹识别", 0),
 //                SettingBean("手势密码", 1),
                 SettingBean("关于", 2),
-                SettingBean("隐私政策", 3),
-                SettingBean("退出登录", 4)
+                SettingBean("隐私政策", 3)
+//                SettingBean("退出登录", 4)
             )
         )
     }
 
-    override fun lazyLoad() {
+    override fun initListener() {
+        iv_back.setOnClickListener {
+            finish()
+        }
     }
 
-    override fun initListener() {
+    override fun start() {
     }
 
     inner class SettingAdapter(layoutResId: Int, data: MutableList<SettingBean>) :
@@ -56,16 +66,13 @@ class SettingFragment : BaseFragment() {
                     2 -> mContext.startActivityNoParam(AboutActivity::class.java)
                     3 -> mContext.startActivityNoParam(Term2Activity::class.java)
                     4 -> {
-                        AlertDialog.Builder(requireContext())
+                        AlertDialog.Builder(this@SettingActivity)
                             .setTitle("确认")
                             .setMessage("退出登录？")
                             .setPositiveButton("是") { _, _ -> //退出登錄
                                 AppActivityManager.getAppManager().finishAllActivity()
                                 startActivity(
-                                    Intent(
-                                        context,
-                                        LoginActivity::class.java
-                                    )
+                                    Intent(this@SettingActivity, LoginActivity::class.java)
                                 )
                             }
                             .setNegativeButton("否", null)

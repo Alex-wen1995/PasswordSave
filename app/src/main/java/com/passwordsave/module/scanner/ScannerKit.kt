@@ -1,27 +1,33 @@
 package com.passwordsave.module.scanner
 
-import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import cn.bingoogolapple.qrcode.core.BarcodeType
 import cn.bingoogolapple.qrcode.core.QRCodeView
+import com.blankj.utilcode.util.BarUtils
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
 import com.passwordsave.utils.showToast
 import kotlinx.android.synthetic.main.activity_scanner.*
 
-class ScannerKit : BaseActivity(), QRCodeView.Delegate {
+class ScannerKit : BaseActivity(), QRCodeView.Delegate{
 
     override fun layoutId(): Int {
+        BarUtils.transparentStatusBar(this)
         return R.layout.activity_scanner
     }
 
     override fun initData() {
     }
-
     override fun initView() {
+
         zbarview.setDelegate(this)
         zbarview.setType(BarcodeType.ALL, null)
     }
@@ -59,9 +65,25 @@ class ScannerKit : BaseActivity(), QRCodeView.Delegate {
     }
 
     override fun onScanQRCodeSuccess(result: String) {
-       showToast(result)
+        val view  = LayoutInflater.from(this).inflate(R.layout.dialog_scan_result, null)
+        val resultTv = view.findViewById<TextView>(R.id.tv_result)
+        resultTv.text = result
+        val btnCopy = view.findViewById<Button>(R.id.btn_copy)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this,R.style.CustomProgressDialog)
+        builder.setView(view)
+        val dialog = builder.create()
+        btnCopy.setOnClickListener {
+            copyText(resultTv,dialog)
+        }
+        dialog.show()
     }
-
+    fun copyText(tv: TextView,dialog: AlertDialog) {
+        val manager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        val clipData = ClipData.newPlainText("text", tv.text)
+        manager.setPrimaryClip(clipData)
+        dialog.dismiss()
+        showToast("文本已复制")
+    }
     override fun onCameraAmbientBrightnessChanged(isDark: Boolean) {
         // 这里是通过修改提示文案来展示环境是否过暗的状态，接入方也可以根据 isDark 的值来实现其他交互效果
         var tipText: String = zbarview.scanBoxView.tipText
@@ -78,6 +100,9 @@ class ScannerKit : BaseActivity(), QRCodeView.Delegate {
         }
     }
 
+
+
+    override fun onPointerCaptureChanged(hasCapture: Boolean) {}
     override fun onScanQRCodeOpenCameraError() {
         Log.e("ScannerKit", "打开相机出错")
     }

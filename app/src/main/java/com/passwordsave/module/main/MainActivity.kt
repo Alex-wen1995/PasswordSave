@@ -1,125 +1,80 @@
 package com.passwordsave.module.main
 
-import android.util.Log
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 
-import com.ashokvarma.bottomnavigation.BottomNavigationBar
-import com.ashokvarma.bottomnavigation.BottomNavigationItem
+import android.Manifest
+import android.content.Intent
+import android.util.Log
+import android.view.inputmethod.EditorInfo
+import com.blankj.utilcode.util.PermissionUtils
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
-import com.passwordsave.module.collect.CollectFragment
+import com.passwordsave.module.account.AccountActivity
+import com.passwordsave.module.account.AddAccountActivity
+import com.passwordsave.module.scanner.ScannerKit
+import com.passwordsave.module.setting.SettingActivity
+import com.passwordsave.utils.showToast
+import kotlinx.android.synthetic.main.fragment_account.*
+import kotlinx.android.synthetic.main.fragment_account.et_search
+import kotlinx.android.synthetic.main.fragment_account.fab
+import kotlinx.android.synthetic.main.fragment_collect.*
+import kotlinx.android.synthetic.main.layout_top.*
+import pub.devrel.easypermissions.EasyPermissions
 
-import com.passwordsave.module.account.AccountFragment
-import com.passwordsave.module.setting.SettingFragment
+class MainActivity : BaseActivity(){
 
-import kotlinx.android.synthetic.main.activity_main.*
-
-class MainActivity : BaseActivity() {
-    private var mTab1: Fragment? = null
-    private var mTab2: Fragment? = null
-    private var mTab3: Fragment? = null
 
     override fun layoutId(): Int {
         return R.layout.activity_main
     }
 
     override fun initData() {
+        top_title.text = "首页"
+
     }
 
     override fun initView() {
-        bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)
-        bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED_NO_TITLE)
-        bottomNavigationBar.setBarBackgroundColor(R.color.colorWhite)
-        bottomNavigationBar
-            .addItem(
-                BottomNavigationItem(
-                    R.drawable.ic_access_1,
-                    ""
-                ).setInactiveIconResource(R.drawable.ic_access)
-                    .setActiveColor(R.color.colorPrimary)
-            )
-            .addItem(
-                BottomNavigationItem(
-                    R.drawable.ic_collect_1,
-                    ""
-                ).setInactiveIconResource(R.drawable.ic_collect)
-                    .setActiveColor(R.color.colorPrimary)
-            )
-            .addItem(
-                BottomNavigationItem(
-                    R.drawable.ic_set_1,
-                    ""
-                ).setInactiveIconResource(R.drawable.ic_set_2)
-                    .setActiveColor(R.color.colorPrimary)
-            )
-            .initialise()
 
     }
 
     override fun initListener() {
-        bottomNavigationBar.setTabSelectedListener(object :
-            BottomNavigationBar.OnTabSelectedListener {
-            override fun onTabSelected(position: Int) {
-                setSelect(position)
-            }
 
-            override fun onTabUnselected(position: Int) {}
-            override fun onTabReselected(position: Int) {
-                setSelect(position)
+        fab.setOnClickListener {
+            startActivity(Intent(this, AddAccountActivity::class.java))
+        }
+
+        menu_1.setOnClickListener {
+            startActivity(Intent(this, AccountActivity::class.java))
+        }
+        menu_2.setOnClickListener {
+            if(!PermissionUtils.isGranted(Manifest.permission.CAMERA)){
+                EasyPermissions.requestPermissions(this, getString(R.string.need_permission), 0,
+                    Manifest.permission.CAMERA
+                )
+            }else{
+                ScannerKit.startCameraAsync(this)
             }
-        })
+        }
+        menu_3.setOnClickListener {
+
+        }
+        menu_4.setOnClickListener {
+            startActivity(Intent(this, SettingActivity::class.java))
+        }
+    }
+    override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
+        super.onPermissionsDenied(requestCode, perms)
+        showToast("扫一扫功能需要打开摄像头权限")
     }
 
+    override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
+        ScannerKit.startCameraAsync(this)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
     override fun start() {
-        setSelect(0)
+
     }
-
-    private fun setSelect(i: Int) {
-        val fm: FragmentManager = supportFragmentManager
-        val transaction: FragmentTransaction = fm.beginTransaction()
-        hideFragment(transaction)
-        when (i) {
-            0 -> if (mTab1 == null) {
-                mTab1 = AccountFragment()
-                transaction.add(R.id.view_stub_main, mTab1 as AccountFragment)
-            } else {
-                transaction.show(mTab1!!)
-            }
-            1 -> if (mTab2 == null) {
-                mTab2 = CollectFragment()
-                transaction.add(R.id.view_stub_main, mTab2 as CollectFragment)
-            } else {
-                transaction.show(mTab2!!)
-            }
-            2 -> if (mTab3 == null) {
-                mTab3 = SettingFragment()
-                transaction.add(R.id.view_stub_main, mTab3 as SettingFragment)
-            } else {
-                transaction.show(mTab3!!)
-            }
-            else -> {
-            }
-        }
-        transaction.commit()
-    }
-
-
-
-
-    private fun hideFragment(transaction: FragmentTransaction) {
-        if (mTab1 != null) {
-            transaction.hide(mTab1!!)
-        }
-        if (mTab2 != null) {
-            transaction.hide(mTab2!!)
-        }
-        if (mTab3 != null) {
-            transaction.hide(mTab3!!)
-        }
-    }
-
-
 
 }

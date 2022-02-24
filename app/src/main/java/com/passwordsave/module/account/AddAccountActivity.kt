@@ -17,7 +17,7 @@ class AddAccountActivity : BaseActivity() {
     override fun initData() {
         top_title.text = "添加账号"
         iv_back.visibility = View.VISIBLE
-        iv_collect.visibility = View.VISIBLE
+//        iv_collect.visibility = View.VISIBLE
     }
 
     override fun initView() {

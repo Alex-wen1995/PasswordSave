@@ -2,10 +2,12 @@ package com.passwordsave.module.ad;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -78,7 +80,6 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        // EasyPermissions handles the request result.
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
@@ -159,6 +160,12 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
     }
 
     private void startCheck(){
+        View view  = LayoutInflater.from(this).inflate(R.layout.dialog_fingerprint, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.CustomProgressDialog);
+        builder.setView(view);
+        Dialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.show();
         mFingerprintIdentify.startIdentify(MAX_AVAILABLE_TIMES, new BaseFingerprint.IdentifyListener() {
             @Override
             public void onSucceed() {
