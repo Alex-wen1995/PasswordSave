@@ -16,19 +16,21 @@ import com.passwordsave.base.BaseFragment
 import com.passwordsave.module.account.AddAccountActivity
 import com.passwordsave.module.account.Account2
 import com.passwordsave.module.account.UpdateAccountActivity
+import com.passwordsave.module.scanner.ScannerKit
 import com.passwordsave.utils.showToast
 import com.socks.library.KLog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_account.*
+import kotlinx.android.synthetic.main.fragment_account.et_search
+import kotlinx.android.synthetic.main.fragment_account.fab
+import kotlinx.android.synthetic.main.fragment_account.smartLayout
+import kotlinx.android.synthetic.main.fragment_collect.*
 import kotlinx.android.synthetic.main.item_account.view.*
 import kotlinx.android.synthetic.main.layout_top.*
 import java.util.ArrayList
 
 class CollectFragment : BaseFragment() {
-    private val mAdapter = AccountAdapter(arrayListOf())
-    private val dataList: ArrayList<Account2> =
-        ArrayList()
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_collect
@@ -36,17 +38,13 @@ class CollectFragment : BaseFragment() {
 
     override fun initView() {
         top_title.text = "我的收藏"
-        rv_account.layoutManager = LinearLayoutManager(requireContext())
-        rv_account.adapter = mAdapter
-        onRefresh()
     }
 
     override fun lazyLoad() {
     }
 
     override fun initListener() {
-        smartLayout.setOnRefreshListener { onRefresh() }
-        smartLayout.setEnableLoadMore(false)
+
         fab.setOnClickListener {
             startActivity(Intent(requireContext(), AddAccountActivity::class.java))
         }
@@ -54,39 +52,19 @@ class CollectFragment : BaseFragment() {
         et_search.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 //如果actionId是搜索的id，则进行下一步的操作
-                getList()
                 return@setOnEditorActionListener true
             }
             false
         }
-    }
 
-    private fun onRefresh() {
-        dataList.clear()
-        getList()
-    }
-
-    @SuppressLint("CheckResult")
-    private fun getList() {
-        mAppDatabase.accountDao()!!
-            .loadAccountByCollect(true, "%" + et_search.text.toString() + "%")//模糊搜索
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { t ->
-                onRefreshComplete()
-                if (t != null) {
-                    KLog.e("t", t.size)
-                    mAdapter.setNewData(t)
-                }
-            }
-    }
-
-    private fun onRefreshComplete() { //刷新或加载更多完成
-        if (smartLayout != null) {
-            smartLayout.finishRefresh()
-            smartLayout.finishLoadMore()
+        menu_1.setOnClickListener {
+            ScannerKit.startCameraAsync(requireContext())
         }
     }
+
+
+
+
 
     inner class AccountAdapter(data: MutableList<Account2>) :
         BaseQuickAdapter<Account2, BaseViewHolder>(

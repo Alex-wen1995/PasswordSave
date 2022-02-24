@@ -47,6 +47,7 @@
         <activity android:name=".module.login.LoginActivity" />
         <activity android:name=".module.login.RegisterActivity" />
         <activity android:name=".module.setting.fingerprint_identification.FingerSetActivity" />
+        <activity android:name=".module.scanner.ScannerKit" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
