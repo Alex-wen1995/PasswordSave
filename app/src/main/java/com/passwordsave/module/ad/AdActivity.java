@@ -1,9 +1,11 @@
 package com.passwordsave.module.ad;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -241,23 +243,36 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
             @Override
             public void onClick(View view) {
                 alertDialog.dismiss();
-                System.exit(0);
+                new AlertDialog.Builder(AdActivity.this)
+                        .setTitle("温馨提示")
+                        .setMessage("根据相关法律法规，你同意后即可继续使用账号管家的服务。我们会严格保护你的信息安全；若你拒绝，将无法继续使用我们的服务。\n如你同意，请点击“同意”开始接受我们的服务。")
+                        .setPositiveButton("同意", new DialogInterface.OnClickListener() {
+                            @SuppressLint("ApplySharedPref")
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                agreeTerm();
+                            }
+                        })
+                        .setNegativeButton("拒绝", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //退出App
+                                System.exit(0);
+                            }
+                        })
+                        .show();
             }
         });
 
         agree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MMKV.defaultMMKV().putBoolean("read_term", true);
                 alertDialog.dismiss();
-                if (!hasPermission()) {
-                    checkPermission();
-                } else {
-                    timerStart();
-                }
+              agreeTerm();
 
             }
         });
+
         term1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -274,6 +289,14 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
         alertDialog.show();
     }
 
+    private void agreeTerm(){
+        MMKV.defaultMMKV().putBoolean("read_term", true);
+        if (!hasPermission()) {
+            checkPermission();
+        } else {
+            timerStart();
+        }
+    }
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
         if (MMKV.defaultMMKV().getBoolean("read_term", false)) {
@@ -285,7 +308,11 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
 
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        finish();
+        if (MMKV.defaultMMKV().getBoolean("read_term", false)) {
+            timerStart();
+        } else {
+            showMsgDialog(this);
+        }
     }
 
     @Override
