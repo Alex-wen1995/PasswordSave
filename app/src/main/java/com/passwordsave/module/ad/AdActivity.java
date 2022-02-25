@@ -268,7 +268,7 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
             @Override
             public void onClick(View view) {
                 alertDialog.dismiss();
-              agreeTerm();
+                agreeTerm();
 
             }
         });
