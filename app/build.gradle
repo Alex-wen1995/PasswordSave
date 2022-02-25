@@ -3,12 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-//配置protobuf插件
-apply plugin: 'com.google.protobuf'
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
-    useLibrary 'org.apache.http.legacy'
+
     defaultConfig {
         applicationId "com.passwordsave"
         minSdkVersion 23
@@ -30,28 +29,7 @@ android {
             dirs 'libs'
         }
     }
-
-    //配置protobuf
-    protobuf {
-        protoc {
-            artifact = 'com.google.protobuf:protoc:3.0.0'
-        }
-        plugins {
-            javalite {
-                artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
-            }
-        }
-        generateProtoTasks {
-            all().each { task ->
-                task.builtins {
-                    remove java
-                }
-                task.plugins {
-                    javalite { }
-                }
-            }
-        }
-    }
+    
 }
 allprojects {
     repositories {
