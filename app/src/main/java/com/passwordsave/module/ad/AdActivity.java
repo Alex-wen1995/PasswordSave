@@ -56,8 +56,6 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
     static final String[] PERMISSION = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE,// 写入权限
             Manifest.permission.READ_EXTERNAL_STORAGE,  //读取权限
-            Manifest.permission.READ_PHONE_STATE,  //设备信息
-
     };
 
     /**
