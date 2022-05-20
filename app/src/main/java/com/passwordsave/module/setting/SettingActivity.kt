@@ -9,8 +9,6 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.passwordsave.R
 import com.passwordsave.app.AppActivityManager
 import com.passwordsave.base.BaseActivity
-import com.passwordsave.base.BaseFragment
-import com.passwordsave.module.login.LoginActivity
 import com.passwordsave.module.main.Term2Activity
 import com.passwordsave.module.setting.about.AboutActivity
 import com.passwordsave.module.setting.fingerprint_identification.FingerSetActivity
@@ -65,19 +63,7 @@ class SettingActivity : BaseActivity() {
                     1 -> mContext.startActivityNoParam(PatternSettingActivity::class.java)
                     2 -> mContext.startActivityNoParam(AboutActivity::class.java)
                     3 -> mContext.startActivityNoParam(Term2Activity::class.java)
-                    4 -> {
-                        AlertDialog.Builder(this@SettingActivity)
-                            .setTitle("确认")
-                            .setMessage("退出登录？")
-                            .setPositiveButton("是") { _, _ -> //退出登錄
-                                AppActivityManager.getAppManager().finishAllActivity()
-                                startActivity(
-                                    Intent(this@SettingActivity, LoginActivity::class.java)
-                                )
-                            }
-                            .setNegativeButton("否", null)
-                            .show()
-                    }
+                    4 -> {}
                 }
             }
         }

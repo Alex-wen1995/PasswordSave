@@ -1,24 +1,29 @@
-package com.passwordsave.module.account;
+package com.passwordsave.module.account
 
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
+
 //本地room数据库实体类
 @Entity
-public class Account {
+class Account {
+    @JvmField
     @PrimaryKey(autoGenerate = true)
-    public int id;
-    public String title;
-    public String account;
-    public String password;
-    public String remark;
+    var id = 0
+    @JvmField
+    var title: String? = null
+    @JvmField
+    var account: String? = null
+    @JvmField
+    var password: String? = null
+    @JvmField
+    var remark: String? = null
 
     @Ignore
-    public transient boolean isShow = false;
-
+    @Transient
+    var isShow = false
     @Ignore
-    @Override
-    public String toString() {
+    override fun toString(): String {
         return "{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
@@ -26,6 +31,6 @@ public class Account {
                 ", password='" + password + '\'' +
                 ", remark='" + remark + '\'' +
                 ", isShow=" + isShow +
-                '}';
+                '}'
     }
 }

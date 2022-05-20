@@ -34,8 +34,6 @@
         <activity android:name=".module.setting.pattern_lock.WholePatternSettingActivity" android:screenOrientation="portrait" />
         <activity android:name=".module.setting.pattern_lock.WholePatternCheckingActivity" android:screenOrientation="portrait" />
         <activity android:name=".module.setting.pattern_lock.WholePatternCancelActivity" android:screenOrientation="portrait" />
-        <activity android:name=".module.login.LoginActivity" android:screenOrientation="portrait" />
-        <activity android:name=".module.login.RegisterActivity" android:screenOrientation="portrait" />
         <activity android:name=".module.setting.fingerprint_identification.FingerSetActivity" android:screenOrientation="portrait" />
         <activity android:name=".module.scanner.ScannerKit" android:screenOrientation="portrait" />
         <activity android:name=".module.setting.SettingActivity" android:screenOrientation="portrait" />
