@@ -4,6 +4,7 @@ package com.passwordsave.module.account
 import android.view.View
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
+import com.passwordsave.utils.showToast
 import com.socks.library.KLog
 import kotlinx.android.synthetic.main.activity_add_account.*
 import kotlinx.android.synthetic.main.layout_top.*
@@ -34,6 +35,7 @@ class AddAccountActivity : BaseActivity() {
             data.remark = et_remark.text.toString()
             KLog.e("data", data.toString())
             mAppDatabase.accountDao()!!.insertAccount(data)
+            showToast("添加成功")
             finish()
         }
     }

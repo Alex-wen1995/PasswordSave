@@ -19,7 +19,7 @@ public class Account {
     @Ignore
     @Override
     public String toString() {
-        return "Account2{" +
+        return "{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", account='" + account + '\'' +

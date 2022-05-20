@@ -174,12 +174,12 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
             }
 
             @Override
-            public void onNotMatch(int availableTimes) {
+            public void onNotMatch(int availableTimes) {//指纹不匹配
                 ExtensionsKt.showToast(AdActivity.this,getString(R.string.not_match, availableTimes));
             }
 
             @Override
-            public void onFailed(boolean isDeviceLocked) {
+            public void onFailed(boolean isDeviceLocked) {//全部识别尝试失败
                 ExtensionsKt.showToast(AdActivity.this,getString(R.string.failed));
                 finish();
             }
@@ -208,7 +208,14 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
         if(mFingerprintIdentify!=null){
             mFingerprintIdentify.cancelIdentify();
         }
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mFingerprintIdentify!=null){
+            mFingerprintIdentify.resumeIdentify();
+        }
     }
 
     @Override

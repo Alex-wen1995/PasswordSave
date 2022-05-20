@@ -25,9 +25,6 @@ import java.util.*
 
 class AccountActivity : BaseActivity() {
     private val mAdapter = AccountAdapter(arrayListOf())
-    private val dataList: ArrayList<Account> =
-        ArrayList()
-
 
     override fun layoutId(): Int {
         return R.layout.fragment_account
@@ -36,28 +33,20 @@ class AccountActivity : BaseActivity() {
     override fun initData() {
     }
 
-
     override fun initView() {
         top_title.text = "我的账号"
         iv_back.visibility = View.VISIBLE
         rv_account.layoutManager = LinearLayoutManager(this)
         rv_account.adapter = mAdapter
         onRefresh()
-
     }
-
 
     override fun initListener() {
         iv_back.setOnClickListener { finish() }
         smartLayout.setOnRefreshListener { onRefresh() }
         smartLayout.setEnableLoadMore(false)
         fab.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    AddAccountActivity::class.java
-                )
-            )
+            startActivity(Intent(this, AddAccountActivity::class.java))
         }
 
         et_search.setOnEditorActionListener { _, actionId, _ ->
@@ -68,15 +57,12 @@ class AccountActivity : BaseActivity() {
             }
             false
         }
-
-
     }
 
     override fun start() {
     }
 
     private fun onRefresh() {
-        dataList.clear()
         getList()
     }
 
@@ -144,8 +130,7 @@ class AccountActivity : BaseActivity() {
                 val data = Account()//删除本地数据
                 data.id = item.id
                 mAppDatabase.accountDao()!!.deleteAccount(data)
-
-
+                showToast("删除成功")
             }
 
             itemView.cl_item.setOnClickListener {
