@@ -94,22 +94,13 @@ public class AdActivity extends Activity implements EasyPermissions.PermissionCa
                 .load(R.drawable.startup)
                 .into(iv);
         close = findViewById(R.id.ad_close);
-        iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        iv.setOnClickListener(v -> {});
 
 
-        close.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                timerCancel();
-                startActivity(new Intent(AdActivity.this, MainActivity.class));
-                finish();
-            }
+        close.setOnClickListener(v -> {
+            timerCancel();
+            startActivity(new Intent(AdActivity.this, MainActivity.class));
+            finish();
         });
 
         timer = new CountDownTimer(2 * 1000, 1000) {
