@@ -12,7 +12,6 @@ public class Account {
     public String account;
     public String password;
     public String remark;
-    public boolean isCollect;
 
     @Ignore
     public transient boolean isShow = false;
@@ -26,7 +25,6 @@ public class Account {
                 ", account='" + account + '\'' +
                 ", password='" + password + '\'' +
                 ", remark='" + remark + '\'' +
-                ", isCollect=" + isCollect +
                 ", isShow=" + isShow +
                 '}';
     }

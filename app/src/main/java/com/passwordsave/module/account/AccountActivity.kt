@@ -84,14 +84,14 @@ class AccountActivity : BaseActivity() {
     @SuppressLint("CheckResult")
     private fun getList() {
         mAppDatabase.accountDao()!!
-//            .loadAllAccount()
-            .loadAccountByKeyword("%"+et_search.text.toString()+"%")//模糊搜索
+//            .loadAllAccount() //全部搜索
+            .loadAccountByKeyword("%"+et_search.text.toString()+"%")!!//模糊搜索
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { t ->
-                if (t != null) {
-                    KLog.e("t",t.size)
-                    mAdapter.setNewData(t)
+            .subscribe { data ->
+                if (data != null) {
+                    KLog.e("t",data.size)
+                    mAdapter.setNewData(data)
                 }
                 onRefreshComplete()
             }
@@ -156,7 +156,6 @@ class AccountActivity : BaseActivity() {
                         .putExtra("account", item.account)
                         .putExtra("password", item.password)
                         .putExtra("remark", item.remark)
-                        .putExtra("isCollect", item.isCollect)
                 )
             }
         }

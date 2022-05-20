@@ -1,13 +1,11 @@
-package com.passwordsave.module.db;
+package com.passwordsave.module.db
 
-import androidx.room.Database;
-import androidx.room.RoomDatabase;
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import com.passwordsave.module.account.Account
+import com.passwordsave.module.db.AccountDao
 
-import com.passwordsave.module.account.Account;
-
-@Database(entities = {Account.class}, version = 1)
-public abstract class AppDatabase extends RoomDatabase {
-
-    public abstract AccountDao accountDao();
-
+@Database(entities = [Account::class], version = 1)
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun accountDao(): AccountDao?
 }

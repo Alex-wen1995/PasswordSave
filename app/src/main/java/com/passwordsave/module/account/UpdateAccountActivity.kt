@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.layout_top.*
 
 
 class UpdateAccountActivity : BaseActivity() {
-    var is_collect = false
     var id = 0
     override fun layoutId(): Int {
         return R.layout.activity_add_account
@@ -28,25 +27,11 @@ class UpdateAccountActivity : BaseActivity() {
         et_account.setText(intent.getStringExtra("account"))
         et_pwd.setText(intent.getStringExtra("password"))
         et_remark.setText(intent.getStringExtra("remark"))
-        is_collect=intent.getBooleanExtra("isCollect",false)
-        if (is_collect) {
-            iv_collect.setImageResource(R.drawable.ic_collect_2)
-        } else {
-            iv_collect.setImageResource(R.drawable.ic_collect)
-        }
     }
 
     override fun initListener() {
         iv_back.setOnClickListener {
             finish()
-        }
-        iv_collect.setOnClickListener {
-            if (is_collect) {
-                iv_collect.setImageResource(R.drawable.ic_collect)
-            } else {
-                iv_collect.setImageResource(R.drawable.ic_collect_2)
-            }
-            is_collect = !is_collect
         }
 
         btn_save.setOnClickListener {
@@ -56,7 +41,6 @@ class UpdateAccountActivity : BaseActivity() {
             data.account = et_account.text.toString()
             data.password = et_pwd.text.toString()
             data.remark = et_remark.text.toString()
-            data.isCollect = is_collect
             KLog.e("data",data.toString())
             mAppDatabase.accountDao()!!.updateAccount(data)
             finish()
