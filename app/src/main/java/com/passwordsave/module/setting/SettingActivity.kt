@@ -1,13 +1,10 @@
 package com.passwordsave.module.setting
 
-import android.content.Intent
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.passwordsave.R
-import com.passwordsave.app.AppActivityManager
 import com.passwordsave.base.BaseActivity
 import com.passwordsave.module.main.Term2Activity
 import com.passwordsave.module.setting.about.AboutActivity

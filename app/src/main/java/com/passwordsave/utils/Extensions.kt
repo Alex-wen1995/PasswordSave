@@ -1,5 +1,6 @@
 package com.passwordsave.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -7,7 +8,11 @@ import android.graphics.BitmapFactory
 import android.util.Base64
 import android.view.View
 import android.widget.Toast
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.passwordsave.app.MyApplication
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -30,6 +35,42 @@ fun Context.showToast(content: String): Toast {
     toast.show()
     return toast
 }
+
+/**
+ * 检查指纹硬件是否可用
+ * 1、传感器当前不可用，清稍后再试
+ * 11、信息没有录入，比如还没录入指纹
+ * 12、没有合适的传感器或者没设置密码，例如手机没有指纹传感器
+ * 15、传感器存在已知的漏洞，在更新修复漏洞前，传感器不可用
+ * -2、设置的一些验证条件，当前手机的Android版本无法满足
+ * -1、不知道是否可以进行验证。通常在旧版本的Android手机上出现，当出现这个错误是，仍然可以尝试进行验证
+ * 0、可以进行验证
+ */
+fun Context.isFingerprintAvailable(context: Context): Int {
+    val manager: BiometricManager = BiometricManager.from(context)
+    return manager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)
+}
+
+/**
+ * 开始验证
+ *
+ * @param activity
+ * @param callBack 验证结果回调
+ */
+public fun authenticate(activity: FragmentActivity, callBack:BiometricPrompt.AuthenticationCallback ) {
+    val promptInfo = createUi()
+    val prompt = BiometricPrompt(activity, ContextCompat.getMainExecutor(activity), callBack)
+    prompt.authenticate(promptInfo)
+}
+
+fun createUi() : BiometricPrompt.PromptInfo{
+    return BiometricPrompt.PromptInfo.Builder()
+        .setTitle("验证")
+        .setSubtitle("请触摸指纹传感器")
+        .setNegativeButtonText("取消")
+        .build()
+}
+
 
 fun Context.startActivity(className:Class<*>){
     startActivity(Intent(this,className))

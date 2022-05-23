@@ -4,7 +4,10 @@ package com.passwordsave.module.main
 import android.Manifest
 import android.content.Intent
 import android.util.Log
+import android.view.KeyEvent
+import android.widget.Toast
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.PermissionUtils
 import com.passwordsave.R
@@ -90,7 +93,19 @@ class MainActivity : BaseActivity(){
             startActivity(Intent(this, SettingActivity::class.java))
         }
     }
-
+    private var exitTime: Long = 0
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event!!.action == KeyEvent.ACTION_DOWN) {
+            if (System.currentTimeMillis() - exitTime > 2000) {
+                Toast.makeText(applicationContext, "再按一次退出程序", Toast.LENGTH_SHORT).show()
+                exitTime = System.currentTimeMillis()
+            } else {
+                AppUtils.exitApp()
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
     override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
         super.onPermissionsDenied(requestCode, perms)
         showToast("扫一扫功能需要打开摄像头权限")
