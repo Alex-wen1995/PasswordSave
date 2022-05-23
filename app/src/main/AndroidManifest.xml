@@ -41,7 +41,6 @@
         <activity android:name=".module.random.coin.CoinActivity" android:screenOrientation="portrait" />
         <activity android:name=".module.random.RandomActivity" android:screenOrientation="portrait" />
         <activity android:name=".module.random.dice.DiceActivity" android:screenOrientation="portrait" />
-        <activity android:name=".module.setting.fingerprint_identification.FingerSetActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
