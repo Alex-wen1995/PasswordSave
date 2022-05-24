@@ -24,7 +24,7 @@ import pub.devrel.easypermissions.EasyPermissions
 
  abstract class BaseFragment: Fragment(),EasyPermissions.PermissionCallbacks{
 
-    protected lateinit var mAppDatabase: AppDatabase
+    private lateinit var mAppDatabase: AppDatabase
 
     /**
      * 视图是否加载完毕
@@ -50,7 +50,7 @@ import pub.devrel.easypermissions.EasyPermissions
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mAppDatabase = (activity!!.application as MyApplication).getAppDatabase()!!
+        mAppDatabase = (requireActivity().application as MyApplication).getAppDatabase()
 
         isViewPrepare = true
         initView()
@@ -101,7 +101,6 @@ import pub.devrel.easypermissions.EasyPermissions
     override fun onDestroy() {
         super.onDestroy()
         cd.dispose()
-        activity?.let { MyApplication.getRefWatcher(it)?.watch(activity) }
     }
 
 

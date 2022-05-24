@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.passwordsave">
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
@@ -16,31 +17,35 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network_config"
-        android:theme="@style/AppTheme">
-        <activity android:name=".module.ad.AdActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        android:theme="@style/AppTheme"
+        tools:targetApi="n">
+        <activity android:name=".module.ad.AdActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".module.account.AddAccountActivity" android:screenOrientation="portrait" />
-        <activity android:name=".module.account.UpdateAccountActivity" android:screenOrientation="portrait" />
-        <activity android:name=".module.main.MainActivity" android:launchMode="singleTask" android:screenOrientation="portrait"  android:windowSoftInputMode="stateHidden|adjustPan"/>
-        <activity android:name=".module.main.Term2Activity" android:screenOrientation="portrait" />
-        <activity android:name=".module.main.Term1Activity" android:screenOrientation="portrait" />
-        <activity android:name=".module.setting.pattern_lock.PatternSettingActivity" android:screenOrientation="portrait" />
-        <activity android:name=".module.setting.about.AboutActivity" android:screenOrientation="portrait" />
-        <activity android:name=".module.setting.pattern_lock.WholePatternSettingActivity" android:screenOrientation="portrait" />
-        <activity android:name=".module.setting.pattern_lock.WholePatternCheckingActivity" android:screenOrientation="portrait" />
-        <activity android:name=".module.setting.pattern_lock.WholePatternCancelActivity" android:screenOrientation="portrait" />
-        <activity android:name=".module.setting.fingerprint_identification.FingerSetActivity" android:screenOrientation="portrait" />
-        <activity android:name=".module.scanner.ScannerKit" android:screenOrientation="portrait" />
-        <activity android:name=".module.setting.SettingActivity" android:screenOrientation="portrait" />
-        <activity android:name=".module.account.AccountActivity" android:screenOrientation="portrait" />
-        <activity android:name=".module.random.coin.CoinActivity" android:screenOrientation="portrait" />
-        <activity android:name=".module.random.RandomActivity" android:screenOrientation="portrait" />
-        <activity android:name=".module.random.dice.DiceActivity" android:screenOrientation="portrait" />
+        <activity android:name=".module.account.AddAccountActivity"/>
+        <activity android:name=".module.account.UpdateAccountActivity"/>
+        <activity android:name=".module.main.MainActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity android:name=".module.main.Term2Activity"/>
+        <activity android:name=".module.main.Term1Activity"/>
+        <activity android:name=".module.setting.pattern_lock.PatternSettingActivity"/>
+        <activity android:name=".module.setting.about.AboutActivity"/>
+        <activity android:name=".module.setting.pattern_lock.WholePatternSettingActivity"/>
+        <activity android:name=".module.setting.pattern_lock.WholePatternCheckingActivity"/>
+        <activity android:name=".module.setting.pattern_lock.WholePatternCancelActivity"/>
+        <activity android:name=".module.setting.fingerprint_identification.FingerSetActivity"/>
+        <activity android:name=".module.scanner.ScannerKit"/>
+        <activity android:name=".module.setting.SettingActivity"/>
+        <activity android:name=".module.account.AccountActivity"/>
+        <activity android:name=".module.random.coin.CoinActivity"/>
+        <activity android:name=".module.random.RandomActivity"/>
+        <activity android:name=".module.random.dice.DiceActivity"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

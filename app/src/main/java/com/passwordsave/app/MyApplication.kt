@@ -11,7 +11,6 @@ import com.passwordsave.module.db.AppDatabase
 import com.passwordsave.utils.PreviewImageLoader
 import com.previewlibrary.ZoomMediaLoader
 import com.socks.library.KLog
-import com.squareup.leakcanary.RefWatcher
 import com.tencent.mmkv.MMKV
 import com.passwordsave.utils.DisplayManager
 import kotlin.properties.Delegates
@@ -24,18 +23,12 @@ import kotlin.properties.Delegates
 
 class MyApplication : Application(){
 
-    private var refWatcher: RefWatcher? = null
     private lateinit var mAppDatabase: AppDatabase
 
     companion object {
         private val TAG = "MyApplication"
         var context: Context by Delegates.notNull()
             private set
-        fun getRefWatcher(context: Context): RefWatcher? {
-            val myApplication = context.applicationContext as MyApplication
-            return myApplication.refWatcher
-        }
-
     }
 
     fun getAppDatabase() : AppDatabase {
@@ -48,13 +41,8 @@ class MyApplication : Application(){
         DisplayManager.init(this)
         registerActivityLifecycleCallbacks(mActivityLifecycleCallbacks)
         ZoomMediaLoader.getInstance().init(PreviewImageLoader())
-        //初始化MMKV
         MMKV.initialize(this)
-
-        mAppDatabase = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java, "android_room_dev.db"
-        )
+        mAppDatabase = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "android_room_dev.db")
             .allowMainThreadQueries()
             .build()
     }
