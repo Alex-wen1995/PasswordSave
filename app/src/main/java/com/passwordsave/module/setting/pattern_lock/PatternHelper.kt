@@ -3,7 +3,7 @@ package com.passwordsave.module.setting.pattern_lock
 import android.text.TextUtils
 import android.util.Log
 import com.passwordsave.module.setting.pattern_lock.SecurityUtil.encrypt
-import com.passwordsave.module.setting.pattern_lock.SharedPreferencesUtil.Companion.instance
+import com.tencent.mmkv.MMKV
 
 /**
  * Created by quan on 14/10/2017.
@@ -87,10 +87,10 @@ open class PatternHelper {
 
     private fun saveToStorage(gesturePwd: String?) {
         val encryptPwd = encrypt(gesturePwd!!)
-        instance!!.saveString(GESTURE_PWD_KEY, encryptPwd)
+        MMKV.mmkvWithID("gesture").putString(GESTURE_PWD_KEY,encryptPwd)
     }
 
-    private val fromStorage: String? = instance?.getString(GESTURE_PWD_KEY)?.let { SecurityUtil.decrypt(it) }
+    private val fromStorage: String? = MMKV.mmkvWithID("gesture").getString(GESTURE_PWD_KEY,"")?.let { SecurityUtil.decrypt(it) }
 
 
     companion object {
