@@ -83,7 +83,7 @@ class MainActivity : BaseActivity(){
                     Manifest.permission.CAMERA
                 )
             }else{
-                ScannerKit.startCameraAsync(this)
+                ScannerKit.startCameraAsync()
             }
         }
         menu_3.setOnClickListener {
@@ -112,7 +112,7 @@ class MainActivity : BaseActivity(){
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
-        ScannerKit.startCameraAsync(this)
+        ScannerKit.startCameraAsync()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {

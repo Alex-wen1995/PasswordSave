@@ -2,6 +2,7 @@ package com.passwordsave.module.random
 
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
+import com.bumptech.glide.Glide
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
 import com.passwordsave.module.random.coin.CoinActivity
@@ -20,6 +21,12 @@ class RandomActivity : BaseActivity() {
     }
 
     override fun initView() {
+        Glide.with(this)
+            .load(R.drawable.ic_coin)
+            .into(iv_random_1)
+        Glide.with(this)
+            .load(R.drawable.ic_menu_3)
+            .into(iv_random_2)
     }
 
     override fun initListener() {

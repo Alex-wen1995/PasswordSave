@@ -8,4 +8,7 @@
     <string name="failed">识别失败</string>
     <string name="fingerprint_success">识别成功</string>
     <string name="fingerprintEnable_hint">请检查指纹硬件可用并已经录入指纹</string>
+
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
 </resources>

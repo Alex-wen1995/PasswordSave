@@ -24,7 +24,7 @@ import pub.devrel.easypermissions.EasyPermissions
 
  abstract class BaseFragment: Fragment(),EasyPermissions.PermissionCallbacks{
 
-    private lateinit var mAppDatabase: AppDatabase
+    protected lateinit var mAppDatabase: AppDatabase
 
     /**
      * 视图是否加载完毕

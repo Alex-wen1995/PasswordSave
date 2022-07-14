@@ -34,10 +34,11 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:id="@+id/iv_random_1"
                 android:layout_width="@dimen/dp_48"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/ic_coin" />
+                tools:src="@drawable/ic_coin" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -61,10 +62,11 @@
             app:layout_constraintTop_toBottomOf="@+id/random_menu_1">
 
             <ImageView
+                android:id="@+id/iv_random_2"
                 android:layout_width="@dimen/dp_48"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/ic_menu_3" />
+                tools:src="@drawable/ic_menu_3" />
 
             <TextView
                 android:layout_width="wrap_content"

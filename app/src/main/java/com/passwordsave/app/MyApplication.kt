@@ -38,7 +38,6 @@ class MyApplication : Application(){
         super.onCreate()
         context = applicationContext
         KLog.init(true)
-        DisplayManager.init(this)
         registerActivityLifecycleCallbacks(mActivityLifecycleCallbacks)
         ZoomMediaLoader.getInstance().init(PreviewImageLoader())
         MMKV.initialize(this)

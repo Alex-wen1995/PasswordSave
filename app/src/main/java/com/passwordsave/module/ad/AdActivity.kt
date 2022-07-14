@@ -13,7 +13,7 @@ import androidx.biometric.BiometricPrompt.*
 import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.passwordsave.R
-import com.passwordsave.module.main.MainActivity
+import com.passwordsave.module.main.MainActivity2
 import com.passwordsave.module.main.Term1Activity
 import com.passwordsave.module.main.Term2Activity
 import com.passwordsave.utils.authenticate
@@ -70,7 +70,7 @@ class AdActivity : FragmentActivity(), PermissionCallbacks {
         ad_Iv.setOnClickListener { }
         ad_close.setOnClickListener {
             timerCancel()
-            startActivity(Intent(this@AdActivity, MainActivity::class.java))
+            startActivity(Intent(this@AdActivity, MainActivity2::class.java))
             finish()
         }
         timer = object : CountDownTimer(2 * 1000, 1000) {
@@ -92,7 +92,7 @@ class AdActivity : FragmentActivity(), PermissionCallbacks {
                     }
                     startCheck()
                 } else {
-                    startActivity(Intent(this@AdActivity, MainActivity::class.java))
+                    startActivity(Intent(this@AdActivity, MainActivity2::class.java))
                     finish()
                 }
             }
@@ -129,7 +129,7 @@ class AdActivity : FragmentActivity(), PermissionCallbacks {
 
             override fun onAuthenticationSucceeded(result: AuthenticationResult) {
                 showToast("验证成功")
-                startActivity(Intent(this@AdActivity, MainActivity::class.java))
+                startActivity(Intent(this@AdActivity, MainActivity2::class.java))
                 finish()
             }
         })

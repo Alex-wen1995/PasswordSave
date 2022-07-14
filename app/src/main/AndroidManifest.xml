@@ -29,7 +29,7 @@
         </activity>
         <activity android:name=".module.account.AddAccountActivity"/>
         <activity android:name=".module.account.UpdateAccountActivity"/>
-        <activity android:name=".module.main.MainActivity"
+        <activity android:name=".module.main.MainActivity2"
             android:launchMode="singleTask"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".module.main.Term2Activity"/>

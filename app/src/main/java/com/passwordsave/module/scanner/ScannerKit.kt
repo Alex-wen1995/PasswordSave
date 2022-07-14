@@ -9,15 +9,17 @@ import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.getSystemService
 import cn.bingoogolapple.qrcode.core.BarcodeType
 import cn.bingoogolapple.qrcode.core.QRCodeView
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.BarUtils
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
 import com.passwordsave.utils.showToast
 import kotlinx.android.synthetic.main.activity_scanner.*
 
-class ScannerKit : BaseActivity(), QRCodeView.Delegate{
+class ScannerKit : BaseActivity(), QRCodeView.Delegate {
 
     override fun layoutId(): Int {
         BarUtils.transparentStatusBar(this)
@@ -26,10 +28,13 @@ class ScannerKit : BaseActivity(), QRCodeView.Delegate{
 
     override fun initData() {
     }
-    override fun initView() {
 
+    override fun initView() {
         zbarview.setDelegate(this)
         zbarview.setType(BarcodeType.ALL, null)
+        zbarview.startCamera()
+        zbarview.changeToScanQRCodeStyle()
+        zbarview.startSpotAndShowRect() // 显示扫描框，并开始识别
     }
 
     override fun initListener() {
@@ -39,16 +44,11 @@ class ScannerKit : BaseActivity(), QRCodeView.Delegate{
     override fun start() {
     }
 
-    override fun onStart() {
-        super.onStart()
-        zbarview.startCamera()
-        zbarview.changeToScanQRCodeStyle()
-        zbarview.startSpotAndShowRect() // 显示扫描框，并开始识别
-    }
+
     override fun onDestroy() {
+        zbarview.stopCamera()
         zbarview.onDestroy()
         super.onDestroy()
-
     }
 
     override fun onStop() {
@@ -56,34 +56,35 @@ class ScannerKit : BaseActivity(), QRCodeView.Delegate{
         super.onStop()
     }
 
-    companion object{
+    companion object {
         @JvmStatic
-        fun startCameraAsync(context: Context) {
-            val intent = Intent(context, ScannerKit::class.java)
-            context.startActivity(intent)
+        fun startCameraAsync() {
+            ActivityUtils.startActivity(ScannerKit::class.java)
         }
     }
 
     override fun onScanQRCodeSuccess(result: String) {
-        val view  = LayoutInflater.from(this).inflate(R.layout.dialog_scan_result, null)
+        val view = LayoutInflater.from(this).inflate(R.layout.dialog_scan_result, null)
         val resultTv = view.findViewById<TextView>(R.id.tv_result)
         resultTv.text = result
         val btnCopy = view.findViewById<Button>(R.id.btn_copy)
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this,R.style.CustomProgressDialog)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this, R.style.CustomProgressDialog)
         builder.setView(view)
         val dialog = builder.create()
         btnCopy.setOnClickListener {
-            copyText(resultTv,dialog)
+            copyText(resultTv, dialog)
         }
         dialog.show()
     }
-    fun copyText(tv: TextView,dialog: AlertDialog) {
+
+    fun copyText(tv: TextView, dialog: AlertDialog) {
         val manager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
         val clipData = ClipData.newPlainText("text", tv.text)
         manager.setPrimaryClip(clipData)
         dialog.dismiss()
         showToast("文本已复制")
     }
+
     override fun onCameraAmbientBrightnessChanged(isDark: Boolean) {
         // 这里是通过修改提示文案来展示环境是否过暗的状态，接入方也可以根据 isDark 的值来实现其他交互效果
         var tipText: String = zbarview.scanBoxView.tipText
@@ -99,7 +100,6 @@ class ScannerKit : BaseActivity(), QRCodeView.Delegate{
             }
         }
     }
-
 
 
     override fun onPointerCaptureChanged(hasCapture: Boolean) {}
