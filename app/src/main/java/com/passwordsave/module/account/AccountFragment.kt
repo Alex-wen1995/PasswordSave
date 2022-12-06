@@ -1,10 +1,14 @@
 package com.passwordsave.module.account
 
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.text.InputType
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -136,10 +140,10 @@ class AccountFragment : BaseFragment(){
     }
 
     fun copyText(tv: TextView) {
-//        val manager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-//        val clipData = ClipData.newPlainText("text", tv.text)
-//        manager.setPrimaryClip(clipData)
-//        showToast("文本已复制")
+        val manager = requireContext().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        val clipData = ClipData.newPlainText("text", tv.text)
+        manager.setPrimaryClip(clipData)
+        showToast("文本已复制")
     }
 
 

@@ -5,6 +5,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
 import android.text.InputType
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
@@ -70,8 +71,8 @@ class AccountActivity : BaseActivity() {
     @SuppressLint("CheckResult")
     private fun getList() {
         mAppDatabase.accountDao()!!
-//            .loadAllAccount() //全部搜索
-            .loadAccountByKeyword("%"+et_search.text.toString()+"%")!!//模糊搜索
+            .loadAllAccount()!! //全部搜索
+//            .loadAccountByKeyword("%"+et_search.text.toString()+"%")!!//模糊搜索
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { data ->
