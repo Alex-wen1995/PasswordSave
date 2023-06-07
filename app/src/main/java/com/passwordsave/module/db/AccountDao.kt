@@ -34,6 +34,6 @@ interface AccountDao {
     @Query("SELECT * FROM Account")
     fun loadAllAccount(): Flowable<List<Account?>?>?
 
-    @Query("SELECT * FROM Account WHERE title LIKE +:search OR account LIKE :search")
+    @Query("SELECT * FROM Account WHERE title LIKE +:search OR account LIKE :search order by id desc")
     fun loadAccountByKeyword(search: String?): Flowable<List<Account?>?>?
 }
