@@ -34,12 +34,11 @@
             android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".module.main.Term2Activity"/>
         <activity android:name=".module.main.Term1Activity"/>
-        <activity android:name=".module.setting.pattern_lock.PatternSettingActivity"/>
         <activity android:name=".module.setting.about.AboutActivity"/>
         <activity android:name=".module.setting.pattern_lock.WholePatternSettingActivity"/>
         <activity android:name=".module.setting.pattern_lock.WholePatternCheckingActivity"/>
         <activity android:name=".module.setting.pattern_lock.WholePatternCancelActivity"/>
-        <activity android:name=".module.setting.fingerprint_identification.FingerSetActivity"/>
+        <activity android:name=".module.setting.unlock.UnlockSetActivity"/>
         <activity android:name=".module.scanner.ScannerKit"/>
         <activity android:name=".module.setting.SettingActivity"/>
         <activity android:name=".module.account.AccountActivity"/>

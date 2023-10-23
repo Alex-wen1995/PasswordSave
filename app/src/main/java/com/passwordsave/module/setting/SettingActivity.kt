@@ -8,8 +8,7 @@ import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
 import com.passwordsave.module.main.Term2Activity
 import com.passwordsave.module.setting.about.AboutActivity
-import com.passwordsave.module.setting.fingerprint_identification.FingerSetActivity
-import com.passwordsave.module.setting.pattern_lock.PatternSettingActivity
+import com.passwordsave.module.setting.unlock.UnlockSetActivity
 import com.passwordsave.utils.startActivityNoParam
 import kotlinx.android.synthetic.main.fragment_setting.*
 import kotlinx.android.synthetic.main.item_menu.view.*
@@ -30,10 +29,9 @@ class SettingActivity : BaseActivity() {
         rv_setting.layoutManager = LinearLayoutManager(this)
         rv_setting.adapter = SettingAdapter(
             R.layout.item_menu, arrayListOf(
-                SettingBean("指纹识别", 0),
-//                SettingBean("手势密码", 1),
-                SettingBean("关于", 2),
-                SettingBean("隐私政策", 3)
+                SettingBean("解锁设置", 0),
+                SettingBean("关于", 1),
+                SettingBean("隐私政策", 2)
 //                SettingBean("退出登录", 4)
             )
         )
@@ -56,10 +54,9 @@ class SettingActivity : BaseActivity() {
 
             itemView.setOnClickListener {
                 when (item.type) {
-                    0 -> mContext.startActivityNoParam(FingerSetActivity::class.java)
-                    1 -> mContext.startActivityNoParam(PatternSettingActivity::class.java)
-                    2 -> mContext.startActivityNoParam(AboutActivity::class.java)
-                    3 -> mContext.startActivityNoParam(Term2Activity::class.java)
+                    0 -> mContext.startActivityNoParam(UnlockSetActivity::class.java)
+                    1 -> mContext.startActivityNoParam(AboutActivity::class.java)
+                    2 -> mContext.startActivityNoParam(Term2Activity::class.java)
                     4 -> {}
                 }
             }

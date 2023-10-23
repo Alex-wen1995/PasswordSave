@@ -13,9 +13,11 @@ import androidx.biometric.BiometricPrompt.*
 import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.passwordsave.R
+import com.passwordsave.module.main.MainActivity
 import com.passwordsave.module.main.MainActivity2
 import com.passwordsave.module.main.Term1Activity
 import com.passwordsave.module.main.Term2Activity
+import com.passwordsave.module.setting.pattern_lock.WholePatternCheckingActivity
 import com.passwordsave.utils.authenticate
 import com.passwordsave.utils.isFingerprintAvailable
 import com.passwordsave.utils.showToast
@@ -84,16 +86,20 @@ class AdActivity : FragmentActivity(), PermissionCallbacks {
              * 倒计时完成时被调用
              */
             override fun onFinish() {
-                if (MMKV.defaultMMKV().decodeBool("hasFingerPrint", false)) {
-                    if (isFingerprintAvailable(this@AdActivity)!=0) {
-                        KLog.e("isFingerprintEnable","请检查指纹硬件可用并已经录入指纹");
-                        showToast(getString(R.string.fingerprintEnable_hint))
-                        return
-                    }
-                    startCheck()
-                } else {
+                if (MMKV.defaultMMKV().decodeBool("hasLock", false)) {
+                    startActivity(Intent(this@AdActivity, WholePatternCheckingActivity::class.java))
+                    finish()
+                }else if (isFingerprintAvailable(this@AdActivity) != 0) {
+                    showToast(getString(R.string.fingerprintEnable_hint))
                     startActivity(Intent(this@AdActivity, MainActivity2::class.java))
                     finish()
+                }else{
+                    if (MMKV.defaultMMKV().decodeBool("hasFingerPrint", false)) {
+                        startCheck()
+                    } else {
+                        startActivity(Intent(this@AdActivity, MainActivity2::class.java))
+                        finish()
+                    }
                 }
             }
         }
