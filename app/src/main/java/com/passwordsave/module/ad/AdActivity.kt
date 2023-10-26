@@ -14,14 +14,12 @@ import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.passwordsave.R
 import com.passwordsave.module.main.MainActivity
-import com.passwordsave.module.main.MainActivity2
 import com.passwordsave.module.main.Term1Activity
 import com.passwordsave.module.main.Term2Activity
 import com.passwordsave.module.setting.pattern_lock.WholePatternCheckingActivity
 import com.passwordsave.utils.authenticate
 import com.passwordsave.utils.isFingerprintAvailable
 import com.passwordsave.utils.showToast
-import com.socks.library.KLog
 import com.tencent.mmkv.MMKV
 import kotlinx.android.synthetic.main.activity_ad.*
 import pub.devrel.easypermissions.EasyPermissions
@@ -72,7 +70,7 @@ class AdActivity : FragmentActivity(), PermissionCallbacks {
         ad_Iv.setOnClickListener { }
         ad_close.setOnClickListener {
             timerCancel()
-            startActivity(Intent(this@AdActivity, MainActivity2::class.java))
+            startActivity(Intent(this@AdActivity, MainActivity::class.java))
             finish()
         }
         timer = object : CountDownTimer(2 * 1000, 1000) {
@@ -89,17 +87,17 @@ class AdActivity : FragmentActivity(), PermissionCallbacks {
                 if (MMKV.defaultMMKV().decodeBool("hasLock", false)) {
                     startActivity(Intent(this@AdActivity, WholePatternCheckingActivity::class.java))
                     finish()
-                }else if (isFingerprintAvailable(this@AdActivity) != 0) {
-                    showToast(getString(R.string.fingerprintEnable_hint))
-                    startActivity(Intent(this@AdActivity, MainActivity2::class.java))
-                    finish()
-                }else{
-                    if (MMKV.defaultMMKV().decodeBool("hasFingerPrint", false)) {
-                        startCheck()
-                    } else {
-                        startActivity(Intent(this@AdActivity, MainActivity2::class.java))
+                }else if(MMKV.defaultMMKV().decodeBool("hasFingerPrint", false)){
+                    if(isFingerprintAvailable(this@AdActivity) != 0) {
+                        showToast(getString(R.string.fingerprintEnable_hint))
+                        startActivity(Intent(this@AdActivity, MainActivity::class.java))
                         finish()
+                    }else{
+                        startCheck()
                     }
+                }else{
+                    startActivity(Intent(this@AdActivity, MainActivity::class.java))
+                    finish()
                 }
             }
         }
@@ -135,7 +133,7 @@ class AdActivity : FragmentActivity(), PermissionCallbacks {
 
             override fun onAuthenticationSucceeded(result: AuthenticationResult) {
                 showToast("验证成功")
-                startActivity(Intent(this@AdActivity, MainActivity2::class.java))
+                startActivity(Intent(this@AdActivity, MainActivity::class.java))
                 finish()
             }
         })
@@ -239,7 +237,7 @@ class AdActivity : FragmentActivity(), PermissionCallbacks {
          */
         val PERMISSION = arrayOf(
             Manifest.permission.WRITE_EXTERNAL_STORAGE,  // 写入权限
-            Manifest.permission.READ_EXTERNAL_STORAGE
+            Manifest.permission.READ_EXTERNAL_STORAGE,
         )
     }
 }

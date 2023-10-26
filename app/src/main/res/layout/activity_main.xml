@@ -13,150 +13,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/et_search"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_24"
-        android:layout_marginEnd="@dimen/dp_24"
-        android:text="欢迎使用"
-        android:textColor="@color/colorBlack"
-        android:paddingStart="@dimen/dp_12"
-        android:paddingTop="@dimen/dp_4"
-        android:paddingEnd="@dimen/dp_12"
-        android:paddingBottom="@dimen/dp_4"
-        android:singleLine="true"
-        android:textStyle="bold"
-        android:textSize="@dimen/sp_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/smartLayout"
+    <FrameLayout
+        android:id="@+id/fl_main"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_search">
-
-        <LinearLayout
-            android:id="@+id/menu_1"
-            android:layout_width="@dimen/dp_120"
-            android:layout_height="@dimen/dp_120"
-            android:layout_marginStart="@dimen/dp_24"
-            android:layout_marginTop="@dimen/dp_36"
-            android:background="@drawable/menu_bg_1"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="@dimen/dp_48"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_menu_2" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_12"
-                android:text="我的账号"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/sp_16" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/menu_2"
-            android:layout_width="@dimen/dp_120"
-            android:layout_height="@dimen/dp_120"
-            android:layout_marginEnd="@dimen/dp_24"
-            android:background="@drawable/menu_bg_2"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="@+id/menu_1">
-
-            <ImageView
-                android:layout_width="@dimen/dp_48"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_menu_1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_12"
-                android:text="扫一扫"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/sp_16" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/menu_3"
-            android:layout_width="@dimen/dp_120"
-            android:layout_height="@dimen/dp_120"
-            android:layout_marginTop="@dimen/dp_36"
-            android:background="@drawable/menu_bg_3"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="@+id/menu_1"
-            app:layout_constraintStart_toStartOf="@+id/menu_1"
-            app:layout_constraintTop_toBottomOf="@+id/menu_1">
-
-            <ImageView
-                android:layout_width="@dimen/dp_48"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_menu_3" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_12"
-                android:text="随机事件"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/sp_16" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/menu_4"
-            android:layout_width="@dimen/dp_120"
-            android:layout_height="@dimen/dp_120"
-            android:background="@drawable/menu_bg_4"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="@+id/menu_2"
-            app:layout_constraintStart_toStartOf="@+id/menu_2"
-            app:layout_constraintTop_toBottomOf="@+id/menu_2"
-            app:layout_constraintTop_toTopOf="@+id/menu_3">
-
-            <ImageView
-                android:layout_width="@dimen/dp_48"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_menu_4" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_12"
-                android:text="设置"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/sp_16" />
-        </LinearLayout>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+        app:layout_constraintTop_toBottomOf="@+id/include"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -170,5 +34,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:rippleColor="#ffe5e5e5" />
+    <com.nightonke.boommenu.BoomMenuButton
+        android:id="@+id/bmb"
+        app:layout_constraintBottom_toBottomOf="@+id/include"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/include"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bmb_backgroundEffect="false"
+        app:bmb_boomEnum="boomParabola_4"
+        app:bmb_cacheOptimization="false"
+        app:bmb_piecePlaceEnum="piecePlace_ham_4"
+        app:bmb_buttonPlaceEnum="buttonPlace_ham_4"
+        app:bmb_showDuration="600"
+        app:bmb_autoHide="false"
+        app:bmb_use3DTransformAnimation="true"
+        app:bmb_hideDuration="300"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

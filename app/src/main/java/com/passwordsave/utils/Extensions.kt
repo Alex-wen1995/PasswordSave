@@ -1,10 +1,10 @@
 package com.passwordsave.utils
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.util.Base64
 import android.view.View
 import android.widget.Toast
@@ -16,8 +16,13 @@ import androidx.fragment.app.FragmentActivity
 import com.passwordsave.app.MyApplication
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.nio.charset.StandardCharsets
 import java.text.ParseException
 import java.util.*
+import javax.crypto.Cipher
+import javax.crypto.SecretKey
+import javax.crypto.SecretKeyFactory
+import javax.crypto.spec.DESKeySpec
 
 
 /**
@@ -104,6 +109,32 @@ fun durationFormat(duration: Long?): String {
     }
 }
 
+fun isAndroid11() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+
+fun encryptDES(text: String, key: String = "19950829"): String {
+    val desKeySpec = DESKeySpec(key.toByteArray(StandardCharsets.UTF_8))
+    val keyFactory = SecretKeyFactory.getInstance("DES")
+    val secretKey: SecretKey = keyFactory.generateSecret(desKeySpec)
+
+    val cipher = Cipher.getInstance("DES/ECB/PKCS5Padding")
+    cipher.init(Cipher.ENCRYPT_MODE, secretKey)
+
+    val encryptedBytes = cipher.doFinal(text.toByteArray(StandardCharsets.UTF_8))
+    return Base64.encodeToString(encryptedBytes,Base64.DEFAULT)
+}
+
+fun decryptDES(encryptedText: String, key: String = "19950829"): String {
+    val desKeySpec = DESKeySpec(key.toByteArray(StandardCharsets.UTF_8))
+    val keyFactory = SecretKeyFactory.getInstance("DES")
+    val secretKey: SecretKey = keyFactory.generateSecret(desKeySpec)
+
+    val cipher = Cipher.getInstance("DES/ECB/PKCS5Padding")
+    cipher.init(Cipher.DECRYPT_MODE, secretKey)
+
+    val encryptedBytes = Base64.decode(encryptedText,Base64.DEFAULT)
+    val decryptedBytes = cipher.doFinal(encryptedBytes)
+    return String(decryptedBytes, StandardCharsets.UTF_8)
+}
 /**
  * 数据流量格式化
  */

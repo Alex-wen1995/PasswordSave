@@ -70,6 +70,7 @@ class AccountFragment : BaseFragment(){
             .subscribe { data ->
                 if (data != null) {
                     KLog.e("t",data.size)
+                    AccountData.dataList = data as List<Account>
                     mAdapter.setNewData(data)
                 }
                 onRefreshComplete()

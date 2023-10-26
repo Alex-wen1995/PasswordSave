@@ -136,4 +136,7 @@ dependencies {
 
     //boom菜单
     implementation 'com.nightonke:boommenu:2.1.1'
+
+    implementation 'com.github.gzu-liyujiang.AndroidPicker:FilePicker:4.1.11'
+
 }

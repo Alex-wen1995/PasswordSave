@@ -10,7 +10,6 @@ import com.github.ihsg.patternlocker.PatternLockerView
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
 import com.passwordsave.module.main.MainActivity
-import com.passwordsave.module.main.MainActivity2
 import kotlinx.android.synthetic.main.activity_whole_pattern_checking.*
 import kotlinx.android.synthetic.main.layout_top.*
 
@@ -43,7 +42,7 @@ class WholePatternCheckingActivity : BaseActivity() {
                 view.updateStatus(isError)
                 patternIndicatorView.updateState(hitIndexList, isError)
                 if(patternHelper!!.isSuccess){
-                    startActivity(Intent(this@WholePatternCheckingActivity, MainActivity2::class.java))
+                    startActivity(Intent(this@WholePatternCheckingActivity, MainActivity::class.java))
                 }
                 updateMsg()
             }
