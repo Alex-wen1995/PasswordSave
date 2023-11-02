@@ -34,14 +34,6 @@ class AdActivity : FragmentActivity(), PermissionCallbacks {
      * 倒数计时器
      */
     private var timer: CountDownTimer? = null
-    private fun checkPermission() {
-        EasyPermissions.requestPermissions(
-            this,
-            getString(R.string.need_permission),
-            0,
-            *PERMISSION
-        )
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,18 +42,7 @@ class AdActivity : FragmentActivity(), PermissionCallbacks {
         initView()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
-    }
 
-    private fun hasPermission(): Boolean {
-        return EasyPermissions.hasPermissions(this, *PERMISSION)
-    }
 
     private fun initView() {
         Glide.with(this)
@@ -102,11 +83,7 @@ class AdActivity : FragmentActivity(), PermissionCallbacks {
             }
         }
         if (MMKV.defaultMMKV().getBoolean("read_term", false)) {
-            if (hasPermission()) {
-                timerStart()
-            } else {
-                checkPermission()
-            }
+            timerStart()
         } else {
             showMsgDialog(this)
         }
@@ -205,11 +182,7 @@ class AdActivity : FragmentActivity(), PermissionCallbacks {
 
     private fun agreeTerm() {
         MMKV.defaultMMKV().putBoolean("read_term", true)
-        if (!hasPermission()) {
-            checkPermission()
-        } else {
-            timerStart()
-        }
+        timerStart()
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
@@ -230,14 +203,5 @@ class AdActivity : FragmentActivity(), PermissionCallbacks {
 
     override fun onPointerCaptureChanged(hasCapture: Boolean) {}
 
-    companion object {
-        /**
-         * 6.0以下版本(系统自动申请) 不会弹框
-         * 有些厂商修改了6.0系统申请机制，他们修改成系统自动申请权限了
-         */
-        val PERMISSION = arrayOf(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,  // 写入权限
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-        )
-    }
+
 }

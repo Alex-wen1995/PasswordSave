@@ -2,14 +2,19 @@ package com.passwordsave.module.import_export
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
+import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.menu.MenuAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.EncryptUtils
 import com.blankj.utilcode.util.FileIOUtils
@@ -26,6 +31,8 @@ import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
 import com.passwordsave.module.account.Account
 import com.passwordsave.module.account.AccountData
+import com.passwordsave.module.main.Term1Activity
+import com.passwordsave.module.main.Term2Activity
 import com.passwordsave.module.setting.SettingBean
 import com.passwordsave.utils.decryptDES
 import com.passwordsave.utils.encryptDES
@@ -46,36 +53,39 @@ class ImportExportActivity : BaseActivity() , OnFilePickedListener {
     val backupsFileDir = PathUtils.getExternalStoragePath()+"/passwordSaveBackups.txt"
     //配置需要取的权限
     val PERMISSION = arrayOf(
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,  // 写入权限
-        Manifest.permission.READ_EXTERNAL_STORAGE,  //读取权限
-    )
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,  // 写入权限
+            Manifest.permission.READ_EXTERNAL_STORAGE,  //读取权限
+        )
 
-    //打开文件管理意图
-    private val enableExternalStorageManager =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-            }
-        }
-
+//打开文件管理意图
+private val enableExternalStorageManager =
+    registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        EasyPermissions.requestPermissions(this, "导出、导入文件需要获取手机的存储和文件管理权限,请允许以下权限", 0, *PERMISSION)
+    }
     //android 11检测是否开启文件管理权限
-    @RequiresApi(Build.VERSION_CODES.R)
-    private fun android11CheckExternalStorageManager() {
-        if (!Environment.isExternalStorageManager()) {
-            val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
-            intent.data = Uri.parse("package:" + this.packageName)
-            startActivityForResult(intent,100)
-
-        } else {
-            // 已经拥有文件管理权限，可以执行相关操作
+    private fun android11CheckExternalStorageManager(){
+        if (isAndroid11()){
+            if (!Environment.isExternalStorageManager()){
+                //Android11暂不做处理
+                val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                intent.data = Uri.parse("package:" + this.packageName)
+                enableExternalStorageManager.launch(intent)
+            }else{
+                EasyPermissions.requestPermissions(this, "导出、导入文件需要获取手机的存储和文件管理权限,请允许以下权限", 0, *PERMISSION)
+            }
+        }else{
+            EasyPermissions.requestPermissions(this, "导出、导入文件需要获取手机的存储和文件管理权限,请允许以下权限", 0, *PERMISSION)
         }
     }
+
     override fun layoutId(): Int {
         return R.layout.activity_import_export
     }
 
     override fun initData() {
-        if (isAndroid11()) {
-            android11CheckExternalStorageManager()
+        //判断有无权限
+        if (!EasyPermissions.hasPermissions(this,*PERMISSION)) {
+            showMsgDialog(this)
         }
     }
 
@@ -152,13 +162,6 @@ class ImportExportActivity : BaseActivity() , OnFilePickedListener {
     override fun start() {
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (!EasyPermissions.hasPermissions(this,*PERMISSION)) {
-            EasyPermissions.requestPermissions(this, "为了您更好的体验,请允许以下权限", 0, *PERMISSION)
-        }
-    }
-
     override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
         showToast("权限不足")
         finish()
@@ -187,5 +190,28 @@ class ImportExportActivity : BaseActivity() , OnFilePickedListener {
 
     fun readTxt(file: File): String {
         return FileIOUtils.readFile2String(file)
+    }
+
+    private fun showMsgDialog(context: Context) {
+        val builder = AlertDialog.Builder(context, R.style.CustomProgressDialog)
+        val dialog = View.inflate(context, R.layout.dialog_permission_msg, null)
+        val refuse = dialog.findViewById<TextView>(R.id.tv_refuse)
+        val agree = dialog.findViewById<TextView>(R.id.tv_agree)
+        builder.setView(dialog)
+        val alertDialog = builder.create()
+        agree.setOnClickListener {
+            alertDialog.dismiss()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                android11CheckExternalStorageManager()
+            } else {
+                EasyPermissions.requestPermissions(this, "导出、导入文件需要获取手机的存储和文件管理权限,请允许以下权限", 0, *PERMISSION)
+            }
+        }
+        refuse.setOnClickListener {
+            alertDialog.dismiss()
+            finish()
+        }
+        alertDialog.setCanceledOnTouchOutside(false)
+        alertDialog.show()
     }
 }
