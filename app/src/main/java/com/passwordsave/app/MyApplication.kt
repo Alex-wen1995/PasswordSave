@@ -5,14 +5,10 @@ import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.room.Room
 
-import com.passwordsave.module.db.AppDatabase
 import com.passwordsave.utils.PreviewImageLoader
 import com.previewlibrary.ZoomMediaLoader
-import com.socks.library.KLog
 import com.tencent.mmkv.MMKV
-import com.passwordsave.utils.DisplayManager
 import kotlin.properties.Delegates
 
 
@@ -23,27 +19,19 @@ import kotlin.properties.Delegates
 
 class MyApplication : Application(){
 
-    private lateinit var mAppDatabase: AppDatabase
-
     companion object {
         private val TAG = "MyApplication"
         var context: Context by Delegates.notNull()
             private set
     }
 
-    fun getAppDatabase() : AppDatabase {
-        return mAppDatabase
-    }
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
-        KLog.init(true)
         registerActivityLifecycleCallbacks(mActivityLifecycleCallbacks)
         ZoomMediaLoader.getInstance().init(PreviewImageLoader())
         MMKV.initialize(this)
-        mAppDatabase = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "android_room_dev.db")
-            .allowMainThreadQueries()
-            .build()
+
     }
 
     private val mActivityLifecycleCallbacks = object : ActivityLifecycleCallbacks {

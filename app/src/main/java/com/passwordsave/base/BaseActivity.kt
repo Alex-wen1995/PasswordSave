@@ -26,7 +26,6 @@ abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCall
     /**
      * 多种状态的 View 的切换
      */
-    protected lateinit var mAppDatabase: AppDatabase
     val cd=CompositeDisposable()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +34,6 @@ abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCall
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         setContentView(layoutId())
         AppActivityManager.getAppManager().addActivity(this)
-        mAppDatabase = (application as MyApplication).getAppDatabase()
         start()
         initData()
         initView()

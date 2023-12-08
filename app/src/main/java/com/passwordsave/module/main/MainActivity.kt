@@ -9,13 +9,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.PermissionUtils
 import com.nightonke.boommenu.BoomButtons.HamButton
 import com.nightonke.boommenu.ButtonEnum
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
-import com.passwordsave.module.account.Account
 import com.passwordsave.module.account.AccountFragment
 import com.passwordsave.module.account.AddAccountActivity
 import com.passwordsave.module.import_export.ImportExportActivity
@@ -23,7 +21,6 @@ import com.passwordsave.module.random.RandomActivity
 import com.passwordsave.module.scanner.ScannerKit
 import com.passwordsave.module.setting.SettingActivity
 import com.passwordsave.utils.showToast
-import com.socks.library.KLog
 import kotlinx.android.synthetic.main.activity_main.bmb
 import kotlinx.android.synthetic.main.fragment_account.fab
 import kotlinx.android.synthetic.main.layout_top.*
@@ -59,11 +56,7 @@ class MainActivity : BaseActivity() {
     }
     private fun initBmb() {
         bmb.buttonEnum = ButtonEnum.Ham
-//        bmb.addBuilder(HamButton.Builder()
-//                .normalImageRes(R.drawable.ic_menu_2)
-//                .normalText("我的账号")
-//                .pieceColor(ContextCompat.getColor(this, R.color.color_B4C8ED))
-//                .normalColor(ContextCompat.getColor(this, R.color.color_B4C8ED)))
+
         bmb.addBuilder(HamButton.Builder()
             .normalImageRes(R.drawable.ic_menu_1)
             .normalText("扫一扫")
@@ -132,7 +125,7 @@ class MainActivity : BaseActivity() {
         var str = ""
         try {
             val assetManager = this.applicationContext.assets
-            val isr = InputStreamReader(assetManager.open("json.txt"), "UTF-8")
+            val isr = InputStreamReader(assetManager.open("passwordSaveBackups.txt"), "UTF-8")
             val br = BufferedReader(isr)
             var mimeTypeLine: String? = null
             while (br.readLine().also { mimeTypeLine = it } != null) {

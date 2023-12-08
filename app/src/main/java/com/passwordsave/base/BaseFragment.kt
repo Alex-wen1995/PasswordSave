@@ -24,8 +24,6 @@ import pub.devrel.easypermissions.EasyPermissions
 
  abstract class BaseFragment: Fragment(),EasyPermissions.PermissionCallbacks{
 
-    protected lateinit var mAppDatabase: AppDatabase
-
     /**
      * 视图是否加载完毕
      */
@@ -50,7 +48,6 @@ import pub.devrel.easypermissions.EasyPermissions
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mAppDatabase = (requireActivity().application as MyApplication).getAppDatabase()
 
         isViewPrepare = true
         initView()

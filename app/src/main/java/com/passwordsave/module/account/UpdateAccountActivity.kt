@@ -1,11 +1,17 @@
 package com.passwordsave.module.account
 
+import android.util.Log
 import android.view.View
 
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
+import com.passwordsave.module.db.AppDatabase
+import com.passwordsave.utils.showToast
 
-import com.socks.library.KLog
+import io.reactivex.SingleObserver
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_account.*
 import kotlinx.android.synthetic.main.layout_top.*
 
@@ -41,8 +47,23 @@ class UpdateAccountActivity : BaseActivity() {
             data.account = et_account.text.toString()
             data.password = et_pwd.text.toString()
             data.remark = et_remark.text.toString()
-            KLog.e("data",data.toString())
-            mAppDatabase.accountDao()!!.updateAccount(data)
+            Log.e("data",data.toString())
+            AppDatabase.instance.accountDao()!!.updateAccount(data)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : SingleObserver<Int> {
+                    override fun onSubscribe(d: Disposable) {
+
+                    }
+
+                    override fun onError(e: Throwable) {
+                    }
+
+                    override fun onSuccess(t: Int) {
+                        showToast("更新成功")
+                    }
+
+                })
             finish()
         }
     }

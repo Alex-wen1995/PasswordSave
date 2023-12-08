@@ -31,14 +31,10 @@ import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
 import com.passwordsave.module.account.Account
 import com.passwordsave.module.account.AccountData
-import com.passwordsave.module.main.Term1Activity
-import com.passwordsave.module.main.Term2Activity
+import com.passwordsave.module.db.AppDatabase
 import com.passwordsave.module.setting.SettingBean
-import com.passwordsave.utils.decryptDES
-import com.passwordsave.utils.encryptDES
 import com.passwordsave.utils.isAndroid11
 import com.passwordsave.utils.showToast
-import com.socks.library.KLog
 import kotlinx.android.synthetic.main.activity_import_export.rv_import
 import kotlinx.android.synthetic.main.item_menu.view.item_profile_name
 import kotlinx.android.synthetic.main.layout_top.iv_back
@@ -134,7 +130,7 @@ private val enableExternalStorageManager =
                         showToast("已导出至：$backupsFileDir")
                     }
                     2->{
-                        mAppDatabase.accountDao()!!.deleteAll()
+                        AppDatabase.instance.accountDao()!!.deleteAll()
                         showToast("清除成功")
                     }
                 }
@@ -178,8 +174,8 @@ private val enableExternalStorageManager =
                 data.account = it.account
                 data.password = it.password
                 data.remark = it.remark
-                KLog.e("data", data.toString())
-                mAppDatabase.accountDao()!!.insertAccount(data)
+                Log.e("data", data.toString())
+                AppDatabase.instance.accountDao()!!.insertAccount(data)
             }
             showToast("导入完成！")
         } catch (e:Exception){

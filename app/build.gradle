@@ -5,12 +5,12 @@ apply plugin: 'kotlin-kapt'
 
 
 android {
-    compileSdk 32
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.passwordsave"
         minSdk 23
-        targetSdk 31
+        targetSdk 33
         versionCode 3
         versionName "3.0"
         signingConfig signingConfigs.debug
@@ -112,12 +112,11 @@ dependencies {
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 //    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
-    implementation 'com.github.zhaokaiqiang.klog:library:1.5.0'
     implementation 'com.tencent:mmkv-static:1.1.1'
 
     implementation 'com.ycjiang:ImagePreview:2.2.5'
 
-    def room_version = "2.4.2"
+    def room_version = "2.6.1"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version" // Kotlin 的话用kapt
     // 如果需要用到 rxjava

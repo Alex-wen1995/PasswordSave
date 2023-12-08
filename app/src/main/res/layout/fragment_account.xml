@@ -16,7 +16,7 @@
         android:background="@drawable/white_radius_bg"
         android:drawableStart="@drawable/ic_search"
         android:drawablePadding="@dimen/dp_8"
-        android:hint="标题/用户名"
+        android:hint="标题"
         android:imeOptions="actionSearch"
         android:paddingStart="@dimen/dp_12"
         android:paddingTop="@dimen/dp_4"

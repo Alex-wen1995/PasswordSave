@@ -8,15 +8,16 @@ import android.content.Intent
 import android.text.InputType
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.passwordsave.R
 import com.passwordsave.base.BaseFragment
+import com.passwordsave.module.db.AppDatabase
 import com.passwordsave.utils.showToast
-import com.socks.library.KLog
+import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_account.*
 import kotlinx.android.synthetic.main.item_account.view.*
@@ -35,7 +36,7 @@ class AccountFragment : BaseFragment(){
     }
 
     override fun lazyLoad() {
-        onRefresh()
+        getList()
     }
 
     override fun initListener() {
@@ -59,19 +60,19 @@ class AccountFragment : BaseFragment(){
         getList()
     }
 
-
     @SuppressLint("CheckResult")
     private fun getList() {
-        mAppDatabase.accountDao()!!
+       AppDatabase.instance.accountDao()!!
 //            .loadAllAccount() //全部搜索
-            .loadAccountByKeyword("%"+et_search.text.toString()+"%")!!//模糊搜索
+            .loadAccountByKeyword("%"+et_search.text.toString()+"%")//模糊搜索
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { data ->
-                if (data != null) {
-                    KLog.e("t",data.size)
-                    AccountData.dataList = data as List<Account>
+            .subscribe{ data ->
+                if (data!!.isNotEmpty()) {
+                    AccountData.dataList = data
                     mAdapter.setNewData(data)
+                }else{
+                    mAdapter.setNewData(mutableListOf())
                 }
                 onRefreshComplete()
             }
@@ -123,8 +124,22 @@ class AccountFragment : BaseFragment(){
             itemView.delete_layout.setOnClickListener {
                 val data = Account()//删除本地数据
                 data.id = item.id
-                mAppDatabase.accountDao()!!.deleteAccount(data)
-                showToast("删除成功")
+                AppDatabase.instance.accountDao()!!.deleteAccount(data)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : SingleObserver<Int> {
+                        override fun onSubscribe(d: Disposable) {
+
+                        }
+
+                        override fun onError(e: Throwable) {
+                        }
+
+                        override fun onSuccess(t: Int) {
+                            showToast("删除成功")
+                        }
+
+                    })
             }
 
             itemView.cl_item.setOnClickListener {
