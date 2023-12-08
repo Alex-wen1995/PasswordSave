@@ -5,7 +5,6 @@ import com.passwordsave.module.account.Account
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
-import org.jetbrains.annotations.NotNull
 
 @Dao
 interface AccountDao {
@@ -30,6 +29,8 @@ interface AccountDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAccount(vararg accounts: Account):Single<List<Long>>
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAccountNotEvent(vararg accounts: Account)
 
     /**
      * 返回的类型为Integer也只能是Integer，否则无法通过编译。

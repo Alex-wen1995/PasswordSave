@@ -18,6 +18,8 @@ class Account {
     var password: String? = null
     @JvmField
     var remark: String? = null
+    @JvmField
+    var createTime: Long? = System.currentTimeMillis()
 
     @Ignore
     @Transient
@@ -30,6 +32,7 @@ class Account {
                 ", account='" + account + '\'' +
                 ", password='" + password + '\'' +
                 ", remark='" + remark + '\'' +
+                ", createTime='" + createTime + '\'' +
                 ", isShow=" + isShow +
                 '}'
     }

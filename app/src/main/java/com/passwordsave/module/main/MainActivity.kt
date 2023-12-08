@@ -3,19 +3,23 @@ package com.passwordsave.module.main
 
 import android.Manifest
 import android.content.Intent
+import android.util.Log
 import android.view.KeyEvent
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.PermissionUtils
 import com.nightonke.boommenu.BoomButtons.HamButton
 import com.nightonke.boommenu.ButtonEnum
 import com.passwordsave.R
 import com.passwordsave.base.BaseActivity
+import com.passwordsave.module.account.Account
 import com.passwordsave.module.account.AccountFragment
 import com.passwordsave.module.account.AddAccountActivity
+import com.passwordsave.module.db.AppDatabase
 import com.passwordsave.module.import_export.ImportExportActivity
 import com.passwordsave.module.random.RandomActivity
 import com.passwordsave.module.scanner.ScannerKit
@@ -116,8 +120,7 @@ class MainActivity : BaseActivity() {
 //            data.account = it.account
 //            data.password = it.password
 //            data.remark = it.remark
-//            KLog.e("data", data.toString())
-//            mAppDatabase.accountDao()!!.insertAccount(data)
+//            Log.e("data", data.toString())
 //        }
     }
 
@@ -127,7 +130,7 @@ class MainActivity : BaseActivity() {
             val assetManager = this.applicationContext.assets
             val isr = InputStreamReader(assetManager.open("passwordSaveBackups.txt"), "UTF-8")
             val br = BufferedReader(isr)
-            var mimeTypeLine: String? = null
+            var mimeTypeLine: String?
             while (br.readLine().also { mimeTypeLine = it } != null) {
                 str += mimeTypeLine
             }

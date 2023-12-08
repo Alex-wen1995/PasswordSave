@@ -35,6 +35,10 @@ import com.passwordsave.module.db.AppDatabase
 import com.passwordsave.module.setting.SettingBean
 import com.passwordsave.utils.isAndroid11
 import com.passwordsave.utils.showToast
+import io.reactivex.SingleObserver
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_import_export.rv_import
 import kotlinx.android.synthetic.main.item_menu.view.item_profile_name
 import kotlinx.android.synthetic.main.layout_top.iv_back
@@ -169,15 +173,10 @@ private val enableExternalStorageManager =
             list = GsonUtils.fromJson(readTxt(file), GsonUtils.getListType(Account::class.java))
             list.reverse()
             list.forEach {
-                val data = Account()
-                data.title = it.title
-                data.account = it.account
-                data.password = it.password
-                data.remark = it.remark
-                Log.e("data", data.toString())
-                AppDatabase.instance.accountDao()!!.insertAccount(data)
+                AppDatabase.instance.accountDao()!!.insertAccountNotEvent(it)
             }
             showToast("导入完成！")
+            finish()
         } catch (e:Exception){
             showToast("文件格式错误")
         }

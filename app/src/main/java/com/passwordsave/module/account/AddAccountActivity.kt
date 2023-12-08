@@ -38,6 +38,7 @@ class AddAccountActivity : BaseActivity() {
             data.account = et_account.text.toString()
             data.password = et_pwd.text.toString()
             data.remark = et_remark.text.toString()
+            data.createTime = System.currentTimeMillis()
             Log.e("data", data.toString())
             AppDatabase.instance.accountDao()!!
                 .searchSameAccount(data.title, data.account, data.password)

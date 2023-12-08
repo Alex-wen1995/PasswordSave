@@ -6,6 +6,7 @@ import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.text.InputType
+import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,7 @@ import com.passwordsave.utils.showToast
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_account.*
 import kotlinx.android.synthetic.main.item_account.view.*
@@ -67,6 +69,9 @@ class AccountFragment : BaseFragment(){
             .loadAccountByKeyword("%"+et_search.text.toString()+"%")//模糊搜索
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+                Log.e("error",it.message.toString())
+            }
             .subscribe{ data ->
                 if (data!!.isNotEmpty()) {
                     AccountData.dataList = data
@@ -76,6 +81,7 @@ class AccountFragment : BaseFragment(){
                 }
                 onRefreshComplete()
             }
+
     }
 
     private fun onRefreshComplete() { //刷新或加载更多完成
