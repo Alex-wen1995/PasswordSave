@@ -110,6 +110,7 @@ fun durationFormat(duration: Long?): String {
 }
 
 fun isAndroid11() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+fun isAndroid13() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
 
 fun encryptDES(text: String, key: String = "19950829"): String {
     val desKeySpec = DESKeySpec(key.toByteArray(StandardCharsets.UTF_8))

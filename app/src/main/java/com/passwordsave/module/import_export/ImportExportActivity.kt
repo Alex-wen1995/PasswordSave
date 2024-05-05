@@ -1,7 +1,6 @@
 package com.passwordsave.module.import_export
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -12,11 +11,8 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.view.menu.MenuAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blankj.utilcode.util.EncryptUtils
 import com.blankj.utilcode.util.FileIOUtils
 import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.GsonUtils
@@ -34,11 +30,8 @@ import com.passwordsave.module.account.AccountData
 import com.passwordsave.module.db.AppDatabase
 import com.passwordsave.module.setting.SettingBean
 import com.passwordsave.utils.isAndroid11
+import com.passwordsave.utils.isAndroid13
 import com.passwordsave.utils.showToast
-import io.reactivex.SingleObserver
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_import_export.rv_import
 import kotlinx.android.synthetic.main.item_menu.view.item_profile_name
 import kotlinx.android.synthetic.main.layout_top.iv_back
@@ -52,10 +45,17 @@ class ImportExportActivity : BaseActivity() , OnFilePickedListener {
 
     val backupsFileDir = PathUtils.getExternalStoragePath()+"/passwordSaveBackups.txt"
     //配置需要取的权限
-    val PERMISSION = arrayOf(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,  // 写入权限
-            Manifest.permission.READ_EXTERNAL_STORAGE,  //读取权限
-        )
+    val PERMISSION =
+        if (isAndroid13()){
+            arrayOf(
+                Manifest.permission.READ_MEDIA_IMAGES,
+            )
+        }else{
+            arrayOf(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,  // 写入权限
+                Manifest.permission.READ_EXTERNAL_STORAGE,  //读取权限
+            )
+        }
 
 //打开文件管理意图
 private val enableExternalStorageManager =
@@ -163,6 +163,8 @@ private val enableExternalStorageManager =
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
+        //把perms输出
+        Log.e("perms",perms.toString())
         showToast("权限不足")
         finish()
     }
